@@ -20,31 +20,31 @@ namespace WeightTrackerApi.Controllers
         }
 
         [HttpPost]
-        public Task<IActionResult> AddUser([FromBody] UserDto userToAdd)
+        public Task<IActionResult> AddUserAsync([FromBody] UserDto userToAdd)
         {
             throw new NotImplementedException();
         }
 
         [HttpGet("{username}")]
-        public Task<IActionResult> GetUser(string username)
+        public Task<IActionResult> GetUserAsync(string username)
         {
             throw new NotImplementedException();
         }
 
         [HttpGet]
-        public Task<IActionResult> GetUsers()
+        public Task<IActionResult> GetUsersAsync()
         {
             throw new NotImplementedException();
         }
 
         [HttpPut]
-        public Task<IActionResult> UpdateUser([FromBody] UserDto updatedUser)
+        public Task<IActionResult> UpdateUserAsync([FromBody] UserDto updatedUser)
         {
             throw new NotImplementedException();
         }
 
         [HttpDelete("{username}")]
-        public Task<IActionResult> DeleteUser(string username)
+        public Task<IActionResult> DeleteUserAsync(string username)
         {
             throw new NotImplementedException();
         }

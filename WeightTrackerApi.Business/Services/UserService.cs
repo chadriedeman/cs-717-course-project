@@ -1,31 +1,40 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using WeightTrackerApi.DataAccess.Repositories;
 using WeightTrackerApi.Domain.Models;
 
 namespace WeightTrackerApi.Business.Services
 {
     public class UserService : IUserService
     {
-        public void AddUser(User user)
+        private readonly IUserRepository _userRepository;
+
+        public UserService(IUserRepository userRepository)
+        {
+            _userRepository = userRepository;
+        }
+
+        public Task AddUserAsync(User user)
         {
             throw new System.NotImplementedException();
         }
 
-        public void DeleteUser(string username)
+        public Task DeleteUserAsync(string username)
         {
             throw new System.NotImplementedException();
         }
 
-        public User GetUser(string username)
+        public Task<User> GetUserAsync(string username)
         {
             throw new System.NotImplementedException();
         }
 
-        public List<User> GetUsers()
+        public Task<IEnumerable<User>> GetUsersAsync()
         {
             throw new System.NotImplementedException();
         }
 
-        public void UpdateUser(User user)
+        public Task UpdateUserAsync(User user)
         {
             throw new System.NotImplementedException();
         }
