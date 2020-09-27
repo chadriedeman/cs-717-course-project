@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeightTrackerApi.Domain", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeightTrackerApi.Business", "..\WeightTrackerApi.Business\WeightTrackerApi.Business.csproj", "{2D772224-679C-4F03-AB84-6E4EBF14817B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeightTrackerApi.Tests", "..\WeightTrackerApi.Tests\WeightTrackerApi.Tests.csproj", "{50212E5A-990D-41DB-9B0A-9529E14E91AE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{2D772224-679C-4F03-AB84-6E4EBF14817B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2D772224-679C-4F03-AB84-6E4EBF14817B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2D772224-679C-4F03-AB84-6E4EBF14817B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50212E5A-990D-41DB-9B0A-9529E14E91AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50212E5A-990D-41DB-9B0A-9529E14E91AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50212E5A-990D-41DB-9B0A-9529E14E91AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50212E5A-990D-41DB-9B0A-9529E14E91AE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
