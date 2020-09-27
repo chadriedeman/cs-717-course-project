@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29806.167
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeightTrackerApi", "WeightTrackerApi.csproj", "{2AF20081-FFBC-409F-BA0A-95C3FD11F62B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeightTrackerApi.DataAccess", "..\WeightTrackerApi.DataAccess\WeightTrackerApi.DataAccess.csproj", "{070E7A41-C413-4A0B-B645-CC3A824678DF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeightTrackerApi.Domain", "..\WeightTrackerApi.Domain\WeightTrackerApi.Domain.csproj", "{B86A78B0-71CE-40DE-9197-4731A3DA06F7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeightTrackerApi.Business", "..\WeightTrackerApi.Business\WeightTrackerApi.Business.csproj", "{2D772224-679C-4F03-AB84-6E4EBF14817B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2AF20081-FFBC-409F-BA0A-95C3FD11F62B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AF20081-FFBC-409F-BA0A-95C3FD11F62B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2AF20081-FFBC-409F-BA0A-95C3FD11F62B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2AF20081-FFBC-409F-BA0A-95C3FD11F62B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{070E7A41-C413-4A0B-B645-CC3A824678DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{070E7A41-C413-4A0B-B645-CC3A824678DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{070E7A41-C413-4A0B-B645-CC3A824678DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{070E7A41-C413-4A0B-B645-CC3A824678DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B86A78B0-71CE-40DE-9197-4731A3DA06F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B86A78B0-71CE-40DE-9197-4731A3DA06F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B86A78B0-71CE-40DE-9197-4731A3DA06F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B86A78B0-71CE-40DE-9197-4731A3DA06F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D772224-679C-4F03-AB84-6E4EBF14817B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D772224-679C-4F03-AB84-6E4EBF14817B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D772224-679C-4F03-AB84-6E4EBF14817B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D772224-679C-4F03-AB84-6E4EBF14817B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3C4AB66C-57B6-4EC8-94D3-BF214234DB7F}
+	EndGlobalSection
+EndGlobal
