@@ -13,9 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ApiTests\" />
-    <Folder Include="BusinessTests\" />
-    <Folder Include="DataTests\" />
+    <ProjectReference Include="..\WeightTrackerApi.Business\WeightTrackerApi.Business.csproj" />
   </ItemGroup>
 
 </Project>
