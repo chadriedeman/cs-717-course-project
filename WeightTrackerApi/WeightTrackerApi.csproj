@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WeightTrackerApi.Business\WeightTrackerApi.Business.csproj" />
+    <ProjectReference Include="..\WeightTrackerApi.DataAccess\WeightTrackerApi.DataAccess.csproj" />
   </ItemGroup>
 
 </Project>

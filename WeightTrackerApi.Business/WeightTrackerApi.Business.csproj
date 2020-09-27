@@ -4,4 +4,8 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\WeightTrackerApi.Domain\WeightTrackerApi.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
