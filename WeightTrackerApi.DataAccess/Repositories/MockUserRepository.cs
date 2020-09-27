@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using WeightTrackerApi.Domain.Models;
 
@@ -25,7 +23,7 @@ namespace WeightTrackerApi.DataAccess.Repositories
 
         public async Task<User> GetUserAsync(string username)
         {
-
+            return await new Task<User>(() => _users.FirstOrDefault(user => user.Username == username));
         }
 
         public async Task<IEnumerable<User>> GetUsersAsync(string username)
@@ -35,9 +33,12 @@ namespace WeightTrackerApi.DataAccess.Repositories
 
         public async Task UpdateUserAsync(User user)
         {
-            var userInList = await GetUserAsync(user.Username);
+            await new Task(async () =>
+            {
+                var userInList = await GetUserAsync(user.Username);
 
-            userInList = user;
+                userInList = user;
+            });
         }
     }
 }
