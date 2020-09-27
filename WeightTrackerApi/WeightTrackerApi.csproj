@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="DTOs\" />
+    <ProjectReference Include="..\WeightTrackerApi.Business\WeightTrackerApi.Business.csproj" />
   </ItemGroup>
 
 </Project>
