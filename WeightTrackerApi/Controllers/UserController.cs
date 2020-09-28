@@ -4,6 +4,7 @@ using System;
 using System.Threading.Tasks;
 using WeightTrackerApi.Business.Services;
 using WeightTrackerApi.DTOs;
+using WeightTrackerApi.Validators;
 
 namespace WeightTrackerApi.Controllers
 {
@@ -20,8 +21,17 @@ namespace WeightTrackerApi.Controllers
         }
 
         [HttpPost]
-        public Task<IActionResult> AddUserAsync([FromBody] UserDto userToAdd)
+        public async Task<IActionResult> AddUserAsync([FromBody] UserDto userToAdd)
         {
+            if (userToAdd == null)
+                return BadRequest("User cannot be null");
+
+            var userDtoValidator = new UserDtoValidator();
+
+            var validationResult = userDtoValidator.Validate(userToAdd);
+
+            // TODO
+
             throw new NotImplementedException();
         }
 
