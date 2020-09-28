@@ -57,7 +57,7 @@ namespace WeightTrackerApi.Controllers
         }
 
         [HttpGet("{username}")]
-        public async Task<IActionResult> GetUserAsync(string username)
+        public async Task<IActionResult> GetUserAsync([FromRoute] string username)
         {
             try
             {
