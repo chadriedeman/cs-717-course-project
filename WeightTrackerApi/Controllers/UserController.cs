@@ -112,5 +112,11 @@ namespace WeightTrackerApi.Controllers
 
             return NoContent();
         }
+
+        [HttpPost("{username}/weigh-in")]
+        public async Task<IActionResult> AddUserWeighInAsync([FromRoute] string username, [FromBody] WeighInDto weighInDto)
+        {
+            throw new NotImplementedException(); // TODO
+        }
     }
 }
