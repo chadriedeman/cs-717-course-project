@@ -7,7 +7,9 @@ namespace WeightTrackerApi.Validators
     {
         public UserDtoValidator()
         {
-            // TODO: Validations
+            RuleFor(user => user.Username).NotEmpty();
+
+            // TODO
         }
     }
 }
