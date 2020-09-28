@@ -9,7 +9,11 @@ namespace WeightTrackerApi.Mappers
         {
             return new User
             {
-                // TODO
+                Id = userDto.Id,
+                FirstName = userDto.FirstName,
+                LastName = userDto.LastName,
+                Username = userDto.Username,
+                // TODO: WeighIns
             };
         }
 
@@ -17,7 +21,11 @@ namespace WeightTrackerApi.Mappers
         {
             return new UserDto
             {
-                // TODO
+                Id = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Username = user.Username,
+                // TODO: WeighIns
             };
         }
     }

@@ -5,6 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="9.2.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\WeightTrackerApi.Business\WeightTrackerApi.Business.csproj" />
     <ProjectReference Include="..\WeightTrackerApi.DataAccess\WeightTrackerApi.DataAccess.csproj" />
   </ItemGroup>
