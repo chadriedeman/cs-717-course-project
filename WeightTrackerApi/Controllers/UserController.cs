@@ -50,10 +50,10 @@ namespace WeightTrackerApi.Controllers
             {
                 _logger.LogError(argumentException.Message, argumentException);
 
-                // TODO already exists
+                return Conflict($"The user {user.Username} already exists.");
             }
 
-            // return Created();
+            return Created("", ""); // TODO: Pass in appropriate params
         }
 
         [HttpGet("{username}")]
