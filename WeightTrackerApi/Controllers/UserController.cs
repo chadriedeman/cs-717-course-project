@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WeightTrackerApi.Business.Services;
 using WeightTrackerApi.DTOs;
+using WeightTrackerApi.Mappers;
 using WeightTrackerApi.Validators;
 
 namespace WeightTrackerApi.Controllers
@@ -23,14 +24,14 @@ namespace WeightTrackerApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddUserAsync([FromBody] UserDto userToAdd)
+        public async Task<IActionResult> AddUserAsync([FromBody] UserDto userDto)
         {
-            if (userToAdd == null)
+            if (userDto == null)
                 return BadRequest("User cannot be null");
 
             var userDtoValidator = new UserDtoValidator();
 
-            var validationResult = userDtoValidator.Validate(userToAdd);
+            var validationResult = userDtoValidator.Validate(userDto);
 
             if (!validationResult.IsValid)
             {
@@ -39,11 +40,20 @@ namespace WeightTrackerApi.Controllers
                 return BadRequest(JsonConvert.SerializeObject(errorMessages));
             }
 
-            // TODO: Map
+            var user = UserMapper.MapUserDtoToUser(userDto);
 
-            // TODO
+            try
+            {
+                await _userService.AddUserAsync(user);
+            } 
+            catch (ArgumentException argumentException)
+            {
+                _logger.LogError(argumentException.Message, argumentException);
 
-            throw new NotImplementedException();
+                // TODO already exists
+            }
+
+            // return Created();
         }
 
         [HttpGet("{username}")]
@@ -72,17 +82,33 @@ namespace WeightTrackerApi.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateUserAsync([FromBody] UserDto updatedUser)
+        public async Task<IActionResult> UpdateUserAsync([FromBody] UserDto userDto)
         {
-            // TODO
+            if (userDto == null)
+                return BadRequest("User cannot be null.");
+
+            var userDtoValidator = new UserDtoValidator();
+
+            var validationResult = userDtoValidator.Validate(userDto);
+
+            if (!validationResult.IsValid)
+            {
+                var errorMessages = validationResult.Errors.Select(error => error.ErrorMessage);
+
+                return BadRequest(JsonConvert.SerializeObject(errorMessages));
+            }
+
+            var user = UserMapper.MapUserDtoToUser(userDto);
+
+            await _userService.UpdateUserAsync(user);
 
             return NoContent();
         }
 
         [HttpDelete("{username}")]
-        public async Task<IActionResult> DeleteUserAsync(string username)
+        public async Task<IActionResult> DeleteUserAsync([FromRoute] string username)
         {
-            // TODO
+            await _userService.DeleteUserAsync(username);
 
             return NoContent();
         }
