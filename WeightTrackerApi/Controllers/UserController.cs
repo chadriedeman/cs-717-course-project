@@ -26,15 +26,26 @@ namespace WeightTrackerApi.Controllers
         }
 
         [HttpGet("{username}")]
-        public Task<IActionResult> GetUserAsync(string username)
+        public async Task<IActionResult> GetUserAsync(string username)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var user = await _userService.GetUserAsync(username);
+
+                return Ok(user);
+            }
+            catch (ArgumentException argumentException)
+            {
+                return BadRequest(argumentException);
+            }
         }
 
         [HttpGet]
-        public Task<IActionResult> GetUsersAsync()
+        public async Task<IActionResult> GetUsersAsync()
         {
-            throw new NotImplementedException();
+            var users = await _userService.GetUsersAsync();
+
+            return Ok(users);
         }
 
         [HttpPut]
