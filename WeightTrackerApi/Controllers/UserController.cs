@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using WeightTrackerApi.Business.Services;
 using WeightTrackerApi.DTOs;
@@ -30,6 +32,15 @@ namespace WeightTrackerApi.Controllers
 
             var validationResult = userDtoValidator.Validate(userToAdd);
 
+            if (!validationResult.IsValid)
+            {
+                var errorMessages = validationResult.Errors.Select(error => error.ErrorMessage);
+
+                return BadRequest(JsonConvert.SerializeObject(errorMessages));
+            }
+
+            // TODO: Map
+
             // TODO
 
             throw new NotImplementedException();
@@ -46,6 +57,8 @@ namespace WeightTrackerApi.Controllers
             }
             catch (ArgumentException argumentException)
             {
+                _logger.LogError(argumentException.Message, argumentException);
+
                 return BadRequest(argumentException);
             }
         }
@@ -59,15 +72,19 @@ namespace WeightTrackerApi.Controllers
         }
 
         [HttpPut]
-        public Task<IActionResult> UpdateUserAsync([FromBody] UserDto updatedUser)
+        public async Task<IActionResult> UpdateUserAsync([FromBody] UserDto updatedUser)
         {
-            throw new NotImplementedException();
+            // TODO
+
+            return NoContent();
         }
 
         [HttpDelete("{username}")]
-        public Task<IActionResult> DeleteUserAsync(string username)
+        public async Task<IActionResult> DeleteUserAsync(string username)
         {
-            throw new NotImplementedException();
+            // TODO
+
+            return NoContent();
         }
     }
 }
