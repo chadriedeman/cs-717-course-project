@@ -118,5 +118,23 @@ namespace WeightTrackerApi.Controllers
         {
             throw new NotImplementedException(); // TODO
         }
+
+        [HttpPut("{username}/weigh-in")]
+        public async Task<IActionResult> UpdateUserWeighInAsync([FromRoute] string username, [FromBody] WeighInDto weighInDto)
+        {
+            throw new NotImplementedException(); // TODO
+        }
+
+        [HttpGet("{username}/weigh-in")]
+        public async Task<IActionResult> UpdateUserWeighInAsync([FromRoute] string username, [FromBody] DateTime date)
+        {
+            throw new NotImplementedException(); // TODO
+        }
+
+        [HttpDelete("{username}/weigh-in")]
+        public async Task<IActionResult> DeleteUserWeighInAsync([FromRoute] string username, [FromBody] DateTime date)
+        {
+            throw new NotImplementedException(); // TODO
+        }
     }
 }
