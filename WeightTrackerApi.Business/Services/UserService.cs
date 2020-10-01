@@ -90,9 +90,12 @@ namespace WeightTrackerApi.Business.Services
             return await GetUsersAsync();
         }
 
-        public Task<WeighIn> GetUserWeighInAsync(string username, DateTime date)
+        public async Task<WeighIn> GetUserWeighInAsync(string username, DateTime date)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(username))
+                throw new ArgumentException("No username was provided to GetUserWeighInAsync.");
+
+            return await _userRepository.GetUserWeighInAsync(username, date);
         }
 
         public Task GetUserWeighInsAsync(DateTime beginDate, DateTime endDate)
