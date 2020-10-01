@@ -28,6 +28,11 @@ namespace WeightTrackerApi.Business.Services
             await _userRepository.AddUserAsync(user);
         }
 
+        public Task AddUserWeighInAsync(string username, WeighIn weighIn)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task DeleteUserAsync(string username)
         {
             if (string.IsNullOrWhiteSpace(username))
@@ -39,6 +44,11 @@ namespace WeightTrackerApi.Business.Services
                 throw new ArgumentException($"{username} does not exist in the database.");
 
             await _userRepository.DeleteUserAsync(username);
+        }
+
+        public Task DeleteUserWeighInAsync(string username, DateTime date)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<User> GetUserAsync(string username)
@@ -54,6 +64,16 @@ namespace WeightTrackerApi.Business.Services
             return await GetUsersAsync();
         }
 
+        public Task<WeighIn> GetUserWeighInAsync(string username, DateTime date)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task GetUserWeighInsAsync(DateTime beginDate, DateTime endDate)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task UpdateUserAsync(User user)
         {
             if (user == null || string.IsNullOrWhiteSpace(user.Username))
@@ -65,6 +85,11 @@ namespace WeightTrackerApi.Business.Services
                 throw new ArgumentException($"{user.Username} does not exist in the database.");
 
             await _userRepository.UpdateUserAsync(user);
+        }
+
+        public Task UpdateUserWeighInAsync(string username, WeighIn weighIn)
+        {
+            throw new NotImplementedException();
         }
 
         private async Task<bool> UserExistsInDatabaseAsync(string username)
