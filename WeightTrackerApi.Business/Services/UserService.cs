@@ -28,9 +28,20 @@ namespace WeightTrackerApi.Business.Services
             await _userRepository.AddUserAsync(user);
         }
 
-        public Task AddUserWeighInAsync(string username, WeighIn weighIn)
+        public async Task AddUserWeighInAsync(string username, WeighIn weighIn)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(username))
+                throw new ArgumentException("No user was provided to AddUserWeighInAsync.");
+
+            if (weighIn == null)
+                throw new ArgumentException("No weigh-in was provided to AddUserWeighInAsync.");
+
+            if (WeighInAlreadyExists(weighIn))
+            {
+                throw new ArgumentException($"A weigh-in already exists for ${username} on ${weighIn.Date.ToShortDateString()}.");
+            }
+
+            await _userRepository.AddUserWeighInAsync(username, weighIn);
         }
 
         public async Task DeleteUserAsync(string username)
