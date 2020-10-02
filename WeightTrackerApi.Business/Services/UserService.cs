@@ -41,7 +41,7 @@ namespace WeightTrackerApi.Business.Services
             if (!userExistsInDatabase)
                 throw new ArgumentException($"{username} does not exist.");
 
-            var weighInAlreadyExists = await WeighInAlreadyExists(weighIn);
+            var weighInAlreadyExists = await WeighInAlreadyExists(username, weighIn.Date);
 
             if (weighInAlreadyExists)
             {
@@ -95,12 +95,25 @@ namespace WeightTrackerApi.Business.Services
             if (string.IsNullOrWhiteSpace(username))
                 throw new ArgumentException("No username was provided to GetUserWeighInAsync.");
 
+            var userExistsInDatabase = await UserExistsInDatabaseAsync(username);
+
+            if (!userExistsInDatabase)
+                throw new ArgumentException($"{username} does not exist in the database.");
+
             return await _userRepository.GetUserWeighInAsync(username, date);
         }
 
-        public Task GetUserWeighInsAsync(DateTime beginDate, DateTime endDate)
+        public async Task GetUserWeighInsAsync(string username, DateTime beginDate, DateTime endDate)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(username))
+                throw new ArgumentException("No username was provided to GetUserWeighInsAsync.");
+
+            var userExistsInDatabase = await UserExistsInDatabaseAsync(username);
+
+            if (!userExistsInDatabase)
+                throw new ArgumentException($"{username} does not exist in the database.");
+
+            _userRepository.GetUserWeighInsAsync(username, beginDate, endDate);
         }
 
         public async Task UpdateUserAsync(User user)
@@ -116,9 +129,24 @@ namespace WeightTrackerApi.Business.Services
             await _userRepository.UpdateUserAsync(user);
         }
 
-        public Task UpdateUserWeighInAsync(string username, WeighIn weighIn)
+        public async Task UpdateUserWeighInAsync(string username, WeighIn weighIn)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(username))
+                throw new ArgumentException("No username was provided to UpdateUserWeighInAsync.");
+
+            var userExistsInDatabase = await UserExistsInDatabaseAsync(username);
+
+            if (!userExistsInDatabase)
+                throw new ArgumentException($"{username} does not exist in the database.");
+
+            var weighInAlreadyExists = await WeighInAlreadyExists(username, weighIn.Date);
+
+            if (!weighInAlreadyExists)
+            {
+                throw new ArgumentException($"No weigh-in exists for ${username} on ${weighIn.Date.ToShortDateString()}.");
+            }
+
+            _userRepository.UpdateUserWeighInAsync(username, weighIn);
         }
 
         private async Task<bool> UserExistsInDatabaseAsync(string username)
@@ -126,6 +154,13 @@ namespace WeightTrackerApi.Business.Services
             var user = await GetUserAsync(username);
 
             return user != null;
+        }
+
+        private async Task<bool> WeighInAlreadyExists(string username, DateTime date)
+        {
+            var weighIn = await GetUserWeighInAsync(username, date);
+
+            return weighIn != null;
         }
     }
 }
