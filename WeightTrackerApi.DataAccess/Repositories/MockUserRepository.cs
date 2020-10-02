@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WeightTrackerApi.Domain.Models;
@@ -14,11 +15,21 @@ namespace WeightTrackerApi.DataAccess.Repositories
             await new Task(() => _users.Add(user));
         }
 
+        public async Task AddUserWeighInAsync(string username, WeighIn weighIn)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task DeleteUserAsync(string username)
         {
             var user = await GetUserAsync(username);
 
             await new Task(() => _users.Remove(user));
+        }
+
+        public async Task DeleteUserWeighInAsync(string username, DateTime date)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<User> GetUserAsync(string username)
@@ -31,6 +42,21 @@ namespace WeightTrackerApi.DataAccess.Repositories
             return await new Task<IEnumerable<User>>(() => _users);
         }
 
+        public async Task<IEnumerable<User>> GetUsersAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<WeighIn> GetUserWeighInAsync(string username, DateTime date)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task GetUserWeighInsAsync(string username, DateTime beginDate, DateTime endDate)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task UpdateUserAsync(User user)
         {
             await new Task(async () =>
@@ -39,6 +65,11 @@ namespace WeightTrackerApi.DataAccess.Repositories
 
                 userInList = user;
             });
+        }
+
+        public async Task UpdateUserWeighInAsync(string username, WeighIn weighIn)
+        {
+            throw new NotImplementedException();
         }
     }
 }
