@@ -1,21 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using WeightTrackerApi.Domain.Models;
 
 namespace WeightTrackerApi.Business.Services
 {
     public interface IUserService
     {
-        Task AddUserAsync(User user);
-        Task<User> GetUserAsync(string username);
-        Task<IEnumerable<User>> GetUsersAsync();
-        Task UpdateUserAsync(User user);
-        Task DeleteUserAsync(string username);
-        Task AddUserWeighInAsync(string username, WeighIn weighIn);
-        Task<WeighIn> GetUserWeighInAsync(string username, DateTime date);
-        Task DeleteUserWeighInAsync(string username, DateTime date);
-        Task UpdateUserWeighInAsync(string username, WeighIn weighIn);
-        Task<IEnumerable<WeighIn>> GetUserWeighInsAsync(string username, DateTime beginDate, DateTime endDate);
+        void AddUser(User user);
+        User GetUser(string username);
+        IEnumerable<User> GetUsers();
+        void UpdateUser(User user);
+        void DeleteUser(string username);
+        void AddUserWeighIn(string username, WeighIn weighIn);
+        WeighIn GetUserWeighIn(string username, DateTime date);
+        void DeleteUserWeighIn(string username, DateTime date);
+        void UpdateUserWeighIn(string username, WeighIn weighIn);
+        IEnumerable<WeighIn> GetUserWeighIns(string username, DateTime beginDate, DateTime endDate);
     }
 }

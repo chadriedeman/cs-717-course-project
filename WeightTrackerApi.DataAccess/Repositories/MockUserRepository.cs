@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using WeightTrackerApi.Domain.Models;
 
 namespace WeightTrackerApi.DataAccess.Repositories
@@ -10,71 +9,68 @@ namespace WeightTrackerApi.DataAccess.Repositories
     {
         private readonly List<User> _users = new List<User>();
 
-        public async Task AddUserAsync(User user)
+        public void AddUser(User user)
         {
-            await new Task(() => _users.Add(user));
+             _users.Add(user);
         }
 
-        public async Task AddUserWeighInAsync(string username, WeighIn weighIn)
+        public void AddUserWeighIn(string username, WeighIn weighIn)
         {
-            var user = await GetUserAsync(username);
+            var user = GetUser(username);
 
             user.WeighIns.Add(weighIn);
         }
 
-        public async Task DeleteUserAsync(string username)
+        public void DeleteUser(string username)
         {
-            var user = await GetUserAsync(username);
+            var user = GetUser(username);
 
-            await new Task(() => _users.Remove(user));
+            _users.Remove(user);
         }
 
-        public async Task DeleteUserWeighInAsync(string username, DateTime date)
+        public void DeleteUserWeighIn(string username, DateTime date)
         {
-            var user = await GetUserAsync(username);
+            var user = GetUser(username);
 
-            var weighIn = await GetUserWeighInAsync(username, date);
+            var weighIn = GetUserWeighIn(username, date);
 
             user.WeighIns.Remove(weighIn);
         }
 
-        public async Task<User> GetUserAsync(string username)
+        public User GetUser(string username)
         {
-            return await new Task<User>(() => _users.FirstOrDefault(user => user.Username == username));
+            return _users.FirstOrDefault(user => user.Username == username);
         }
 
-        public async Task<IEnumerable<User>> GetUsersAsync()
+        public IEnumerable<User> GetUsers()
         {
-            return await new Task<IEnumerable<User>>(() => _users);
+            return _users;
         }
 
-        public async Task<WeighIn> GetUserWeighInAsync(string username, DateTime date)
+        public WeighIn GetUserWeighIn(string username, DateTime date)
         {
-            var user = await GetUserAsync(username);
+            var user = GetUser(username);
 
             return user.WeighIns.FirstOrDefault(weighIn => DatesAreEqual(weighIn.Date, date));
         }
 
-        public async Task<IEnumerable<WeighIn>> GetUserWeighInsAsync(string username, DateTime beginDate, DateTime endDate)
+        public IEnumerable<WeighIn> GetUserWeighIns(string username, DateTime beginDate, DateTime endDate)
         {
-            var user = await GetUserAsync(username);
+            var user = GetUser(username);
 
-            return user.WeighIns.Where(weighIn => DateTime.Compare(weighIn.Date, beginDate) >=0 && DateTime.Compare(weighIn.Date, endDate) <= 0).ToList();
+            return user.WeighIns.Where(weighIn => DateTime.Compare(weighIn.Date, beginDate) >= 0 && DateTime.Compare(weighIn.Date, endDate) <= 0).ToList();
         }
 
-        public async Task UpdateUserAsync(User user)
+        public void UpdateUser(User user)
         {
-            await new Task(async () =>
-            {
-                var userInList = await GetUserAsync(user.Username);
+            var userInList = GetUser(user.Username);
 
-                userInList = user;
-            });
+            userInList = user;
         }
 
-        public async Task UpdateUserWeighInAsync(string username, WeighIn updatedWeighIn)
+        public void UpdateUserWeighIn(string username, WeighIn updatedWeighIn)
         {
-            var currentWeighIn = await GetUserWeighInAsync(username, updatedWeighIn.Date);
+            var currentWeighIn = GetUserWeighIn(username, updatedWeighIn.Date);
 
             currentWeighIn = updatedWeighIn;
         }

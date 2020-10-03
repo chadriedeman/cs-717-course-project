@@ -3,7 +3,6 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
 using System.Linq;
-using System.Threading.Tasks;
 using WeightTrackerApi.Business.Services;
 using WeightTrackerApi.DTOs;
 using WeightTrackerApi.Mappers;
@@ -24,7 +23,7 @@ namespace WeightTrackerApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddUserAsync([FromBody] UserDto userDto)
+        public IActionResult AddUser([FromBody] UserDto userDto)
         {
             if (userDto == null)
                 return BadRequest("User cannot be null");
@@ -44,7 +43,7 @@ namespace WeightTrackerApi.Controllers
 
             try
             {
-                await _userService.AddUserAsync(user);
+                _userService.AddUser(user);
             } 
             catch (ArgumentException argumentException)
             {
@@ -57,11 +56,11 @@ namespace WeightTrackerApi.Controllers
         }
 
         [HttpGet("{username}")]
-        public async Task<IActionResult> GetUserAsync([FromRoute] string username)
+        public  IActionResult GetUser([FromRoute] string username)
         {
             try
             {
-                var user = await _userService.GetUserAsync(username);
+                var user = _userService.GetUser(username);
 
                 return Ok(user);
             }
@@ -74,15 +73,15 @@ namespace WeightTrackerApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetUsersAsync()
+        public IActionResult GetUsers()
         {
-            var users = await _userService.GetUsersAsync();
+            var users = _userService.GetUsers();
 
             return Ok(users);
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateUserAsync([FromBody] UserDto userDto)
+        public IActionResult UpdateUser([FromBody] UserDto userDto)
         {
             if (userDto == null)
                 return BadRequest("User cannot be null.");
@@ -100,45 +99,45 @@ namespace WeightTrackerApi.Controllers
 
             var user = UserMapper.MapUserDtoToUser(userDto);
 
-            await _userService.UpdateUserAsync(user);
+            _userService.UpdateUser(user);
 
             return NoContent();
         }
 
         [HttpDelete("{username}")]
-        public async Task<IActionResult> DeleteUserAsync([FromRoute] string username)
+        public IActionResult DeleteUser([FromRoute] string username)
         {
-            await _userService.DeleteUserAsync(username);
+            _userService.DeleteUser(username);
 
             return NoContent();
         }
 
         [HttpPost("{username}/weigh-in")]
-        public async Task<IActionResult> AddUserWeighInAsync([FromRoute] string username, [FromBody] WeighInDto weighInDto)
+        public IActionResult AddUserWeighIn([FromRoute] string username, [FromBody] WeighInDto weighInDto)
         {
             throw new NotImplementedException(); // TODO
         }
 
         [HttpPut("{username}/weigh-in")]
-        public async Task<IActionResult> UpdateUserWeighInAsync([FromRoute] string username, [FromBody] WeighInDto weighInDto)
+        public IActionResult UpdateUserWeighIn([FromRoute] string username, [FromBody] WeighInDto weighInDto)
         {
             throw new NotImplementedException(); // TODO
         }
 
         [HttpGet("{username}/weigh-in")]
-        public async Task<IActionResult> GetUserWeighInAsync([FromRoute] string username, [FromBody] DateTime date)
+        public IActionResult GetUserWeighIn([FromRoute] string username, [FromBody] DateTime date)
         {
             throw new NotImplementedException(); // TODO
         }
 
         [HttpDelete("{username}/weigh-in")]
-        public async Task<IActionResult> DeleteUserWeighInAsync([FromRoute] string username, [FromBody] DateTime date)
+        public IActionResult DeleteUserWeighIn([FromRoute] string username, [FromBody] DateTime date)
         {
             throw new NotImplementedException(); // TODO
         }
 
         [HttpGet("{username}/weigh-in")]
-        public async Task<IActionResult> GetUserWeighInsAsync([FromRoute] DateTime beginDate, [FromBody] DateTime endDate)
+        public IActionResult GetUserWeighIns([FromRoute] DateTime beginDate, [FromBody] DateTime endDate)
         {
             throw new NotImplementedException(); // TODO
         }

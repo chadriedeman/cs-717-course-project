@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using WeightTrackerApi.DataAccess.Repositories;
 using WeightTrackerApi.Domain.Models;
 
@@ -15,150 +14,150 @@ namespace WeightTrackerApi.Business.Services
             _userRepository = userRepository;
         }
 
-        public async Task AddUserAsync(User user)
+        public void AddUser(User user)
         {
             if (user == null || string.IsNullOrWhiteSpace(user.Username))
-                throw new ArgumentException("No user was provided to AddUserAsync.");
+                throw new ArgumentException("No user was provided to AddUser.");
 
-            var userExistsInDatabase = await UserExistsInDatabaseAsync(user.Username);
+            var userExistsInDatabase = UserExistsInDatabase(user.Username);
 
             if (userExistsInDatabase)
                 throw new ArgumentException($"{user.Username} already exists.");
 
-            await _userRepository.AddUserAsync(user);
+            _userRepository.AddUser(user);
         }
 
-        public async Task AddUserWeighInAsync(string username, WeighIn weighIn)
+        public void AddUserWeighIn(string username, WeighIn weighIn)
         {
             if (string.IsNullOrWhiteSpace(username))
-                throw new ArgumentException("No user was provided to AddUserWeighInAsync.");
+                throw new ArgumentException("No user was provided to AddUserWeighIn.");
 
             if (weighIn == null)
-                throw new ArgumentException("No weigh-in was provided to AddUserWeighInAsync.");
+                throw new ArgumentException("No weigh-in was provided to AddUserWeighIn.");
 
-            var userExistsInDatabase = await UserExistsInDatabaseAsync(username);
+            var userExistsInDatabase = UserExistsInDatabase(username);
 
             if (!userExistsInDatabase)
                 throw new ArgumentException($"{username} does not exist.");
 
-            var weighInAlreadyExists = await WeighInAlreadyExists(username, weighIn.Date);
+            var weighInAlreadyExists = WeighInAlreadyExists(username, weighIn.Date);
 
             if (weighInAlreadyExists)
             {
                 throw new ArgumentException($"A weigh-in already exists for ${username} on ${weighIn.Date.ToShortDateString()}.");
             }
 
-            await _userRepository.AddUserWeighInAsync(username, weighIn);
+            _userRepository.AddUserWeighIn(username, weighIn);
         }
 
-        public async Task DeleteUserAsync(string username)
+        public void DeleteUser(string username)
         {
             if (string.IsNullOrWhiteSpace(username))
-                throw new ArgumentException("No username was provided to DeleteUserAsync.");
+                throw new ArgumentException("No username was provided to DeleteUser.");
 
-            var userExistsInDatabase = await UserExistsInDatabaseAsync(username);
+            var userExistsInDatabase = UserExistsInDatabase(username);
 
             if (!userExistsInDatabase)
                 throw new ArgumentException($"{username} does not exist in the database.");
 
-            await _userRepository.DeleteUserAsync(username);
+            _userRepository.DeleteUser(username);
         }
 
-        public async Task DeleteUserWeighInAsync(string username, DateTime date)
+        public void DeleteUserWeighIn(string username, DateTime date)
         {
             if (string.IsNullOrWhiteSpace(username))
-                throw new ArgumentException("No username was provided to DeleteUserWeighInAsync.");
+                throw new ArgumentException("No username was provided to DeleteUserWeighIn.");
 
-            var userExistsInDatabase = await UserExistsInDatabaseAsync(username);
+            var userExistsInDatabase = UserExistsInDatabase(username);
 
             if (!userExistsInDatabase)
                 throw new ArgumentException($"{username} does not exist in the database.");
 
-            await _userRepository.DeleteUserWeighInAsync(username, date);
+            _userRepository.DeleteUserWeighIn(username, date);
         }
 
-        public async Task<User> GetUserAsync(string username)
+        public User GetUser(string username)
         {
             if (string.IsNullOrWhiteSpace(username))
-                throw new ArgumentException("No username was provided to GetUserAsync.");
+                throw new ArgumentException("No username was provided to GetUser.");
 
-            return await _userRepository.GetUserAsync(username);
+            return _userRepository.GetUser(username);
         }
 
-        public async Task<IEnumerable<User>> GetUsersAsync()
+        public IEnumerable<User> GetUsers()
         {
-            return await _userRepository.GetUsersAsync();
+            return _userRepository.GetUsers();
         }
 
-        public async Task<WeighIn> GetUserWeighInAsync(string username, DateTime date)
+        public WeighIn GetUserWeighIn(string username, DateTime date)
         {
             if (string.IsNullOrWhiteSpace(username))
-                throw new ArgumentException("No username was provided to GetUserWeighInAsync.");
+                throw new ArgumentException("No username was provided to GetUserWeighIn.");
 
-            var userExistsInDatabase = await UserExistsInDatabaseAsync(username);
+            var userExistsInDatabase = UserExistsInDatabase(username);
 
             if (!userExistsInDatabase)
                 throw new ArgumentException($"{username} does not exist in the database.");
 
-            return await _userRepository.GetUserWeighInAsync(username, date);
+            return _userRepository.GetUserWeighIn(username, date);
         }
 
-        public async Task<IEnumerable<WeighIn>> GetUserWeighInsAsync(string username, DateTime beginDate, DateTime endDate)
+        public IEnumerable<WeighIn> GetUserWeighIns(string username, DateTime beginDate, DateTime endDate)
         {
             if (string.IsNullOrWhiteSpace(username))
-                throw new ArgumentException("No username was provided to GetUserWeighInsAsync.");
+                throw new ArgumentException("No username was provided to GetUserWeighIns.");
 
-            var userExistsInDatabase = await UserExistsInDatabaseAsync(username);
+            var userExistsInDatabase = UserExistsInDatabase(username);
 
             if (!userExistsInDatabase)
                 throw new ArgumentException($"{username} does not exist in the database.");
 
-            return await _userRepository.GetUserWeighInsAsync(username, beginDate, endDate);
+            return _userRepository.GetUserWeighIns(username, beginDate, endDate);
         }
 
-        public async Task UpdateUserAsync(User user)
+        public void UpdateUser(User user)
         {
             if (user == null || string.IsNullOrWhiteSpace(user.Username))
-                throw new ArgumentException("No username was provided to UpdateUserAsync.");
+                throw new ArgumentException("No username was provided to UpdateUser.");
 
-            var userExistsInDatabase = await UserExistsInDatabaseAsync(user.Username);
+            var userExistsInDatabase = UserExistsInDatabase(user.Username);
 
             if (!userExistsInDatabase)
                 throw new ArgumentException($"{user.Username} does not exist in the database.");
 
-            await _userRepository.UpdateUserAsync(user);
+            _userRepository.UpdateUser(user);
         }
 
-        public async Task UpdateUserWeighInAsync(string username, WeighIn weighIn)
+        public void UpdateUserWeighIn(string username, WeighIn weighIn)
         {
             if (string.IsNullOrWhiteSpace(username))
-                throw new ArgumentException("No username was provided to UpdateUserWeighInAsync.");
+                throw new ArgumentException("No username was provided to UpdateUserWeighIn.");
 
-            var userExistsInDatabase = await UserExistsInDatabaseAsync(username);
+            var userExistsInDatabase = UserExistsInDatabase(username);
 
             if (!userExistsInDatabase)
                 throw new ArgumentException($"{username} does not exist in the database.");
 
-            var weighInAlreadyExists = await WeighInAlreadyExists(username, weighIn.Date);
+            var weighInAlreadyExists = WeighInAlreadyExists(username, weighIn.Date);
 
             if (!weighInAlreadyExists)
             {
                 throw new ArgumentException($"No weigh-in exists for ${username} on ${weighIn.Date.ToShortDateString()}.");
             }
 
-            await _userRepository.UpdateUserWeighInAsync(username, weighIn);
+            _userRepository.UpdateUserWeighIn(username, weighIn);
         }
 
-        private async Task<bool> UserExistsInDatabaseAsync(string username)
+        private bool UserExistsInDatabase(string username)
         {
-            var user = await GetUserAsync(username);
+            var user = GetUser(username);
 
             return user != null;
         }
 
-        private async Task<bool> WeighInAlreadyExists(string username, DateTime date)
+        private bool WeighInAlreadyExists(string username, DateTime date)
         {
-            var weighIn = await GetUserWeighInAsync(username, date);
+            var weighIn = GetUserWeighIn(username, date);
 
             return weighIn != null;
         }

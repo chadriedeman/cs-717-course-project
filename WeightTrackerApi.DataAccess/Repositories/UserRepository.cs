@@ -7,52 +7,52 @@ namespace WeightTrackerApi.DataAccess.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        public async Task AddUserAsync(User user)
+        public void AddUser(User user)
         {
             throw new NotImplementedException();
         }
 
-        public async Task AddUserWeighInAsync(string username, WeighIn weighIn)
+        public void AddUserWeighIn(string username, WeighIn weighIn)
         {
             throw new NotImplementedException();
         }
 
-        public async Task DeleteUserAsync(string username)
+        public void DeleteUser(string username)
         {
             throw new NotImplementedException();
         }
 
-        public async Task DeleteUserWeighInAsync(string username, DateTime date)
+        public void DeleteUserWeighIn(string username, DateTime date)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<User> GetUserAsync(string username)
+        public User GetUser(string username)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<User>> GetUsersAsync()
+        public IEnumerable<User> GetUsers()
         {
             throw new NotImplementedException();
         }
 
-        public async Task<WeighIn> GetUserWeighInAsync(string username, DateTime date)
+        public WeighIn GetUserWeighIn(string username, DateTime date)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<WeighIn>> GetUserWeighInsAsync(string username, DateTime beginDate, DateTime endDate)
+        public IEnumerable<WeighIn> GetUserWeighIns(string username, DateTime beginDate, DateTime endDate)
         {
             throw new NotImplementedException();
         }
 
-        public async Task UpdateUserAsync(User user)
+        public void UpdateUser(User user)
         {
             throw new NotImplementedException();
         }
 
-        public async Task UpdateUserWeighInAsync(string username, WeighIn weighIn)
+        public void UpdateUserWeighIn(string username, WeighIn weighIn)
         {
             throw new NotImplementedException();
         }
