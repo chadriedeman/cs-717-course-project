@@ -103,7 +103,7 @@ namespace WeightTrackerApi.Business.Services
             return await _userRepository.GetUserWeighInAsync(username, date);
         }
 
-        public async Task GetUserWeighInsAsync(string username, DateTime beginDate, DateTime endDate)
+        public async Task<IEnumerable<WeighIn>> GetUserWeighInsAsync(string username, DateTime beginDate, DateTime endDate)
         {
             if (string.IsNullOrWhiteSpace(username))
                 throw new ArgumentException("No username was provided to GetUserWeighInsAsync.");
@@ -113,7 +113,7 @@ namespace WeightTrackerApi.Business.Services
             if (!userExistsInDatabase)
                 throw new ArgumentException($"{username} does not exist in the database.");
 
-            _userRepository.GetUserWeighInsAsync(username, beginDate, endDate);
+            return await _userRepository.GetUserWeighInsAsync(username, beginDate, endDate);
         }
 
         public async Task UpdateUserAsync(User user)

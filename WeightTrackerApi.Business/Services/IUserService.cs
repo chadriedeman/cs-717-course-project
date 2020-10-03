@@ -16,6 +16,6 @@ namespace WeightTrackerApi.Business.Services
         Task<WeighIn> GetUserWeighInAsync(string username, DateTime date);
         Task DeleteUserWeighInAsync(string username, DateTime date);
         Task UpdateUserWeighInAsync(string username, WeighIn weighIn);
-        Task GetUserWeighInsAsync(string username, DateTime beginDate, DateTime endDate);
+        Task<IEnumerable<WeighIn>> GetUserWeighInsAsync(string username, DateTime beginDate, DateTime endDate);
     }
 }
