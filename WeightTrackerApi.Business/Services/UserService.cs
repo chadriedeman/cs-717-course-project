@@ -87,7 +87,7 @@ namespace WeightTrackerApi.Business.Services
 
         public async Task<IEnumerable<User>> GetUsersAsync()
         {
-            return await GetUsersAsync();
+            return await _userRepository.GetUsersAsync();
         }
 
         public async Task<WeighIn> GetUserWeighInAsync(string username, DateTime date)
