@@ -9,7 +9,7 @@ namespace WeightTrackerApi.DataAccess.Repositories
     {
         public async Task AddUserAsync(User user)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public async Task AddUserWeighInAsync(string username, WeighIn weighIn)
@@ -19,7 +19,7 @@ namespace WeightTrackerApi.DataAccess.Repositories
 
         public async Task DeleteUserAsync(string username)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public async Task DeleteUserWeighInAsync(string username, DateTime date)
@@ -29,12 +29,7 @@ namespace WeightTrackerApi.DataAccess.Repositories
 
         public async Task<User> GetUserAsync(string username)
         {
-            throw new System.NotImplementedException();
-        }
-
-        public async Task<IEnumerable<User>> GetUsersAsync(string username)
-        {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public async Task<IEnumerable<User>> GetUsersAsync()
@@ -47,14 +42,14 @@ namespace WeightTrackerApi.DataAccess.Repositories
             throw new NotImplementedException();
         }
 
-        public async Task GetUserWeighInsAsync(string username, DateTime beginDate, DateTime endDate)
+        public async Task<IEnumerable<WeighIn>> GetUserWeighInsAsync(string username, DateTime beginDate, DateTime endDate)
         {
             throw new NotImplementedException();
         }
 
         public async Task UpdateUserAsync(User user)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public async Task UpdateUserWeighInAsync(string username, WeighIn weighIn)

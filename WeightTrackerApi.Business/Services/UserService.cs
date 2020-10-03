@@ -146,7 +146,7 @@ namespace WeightTrackerApi.Business.Services
                 throw new ArgumentException($"No weigh-in exists for ${username} on ${weighIn.Date.ToShortDateString()}.");
             }
 
-            _userRepository.UpdateUserWeighInAsync(username, weighIn);
+            await _userRepository.UpdateUserWeighInAsync(username, weighIn);
         }
 
         private async Task<bool> UserExistsInDatabaseAsync(string username)
