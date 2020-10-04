@@ -6,7 +6,7 @@ using WeightTrackerApi.Domain.Models;
 
 namespace WeightTrackerApi.Tests.BusinessTests.ServiceTests.UserServiceTests
 {
-    public class AddUserWeighIn : UserServiceTestBase
+    public class AddUserWeighIn : UserServiceTestsBase
     {
         [Test]
         public void ShouldThrowArgumentExceptionWhenUsernameIsEmpty()
