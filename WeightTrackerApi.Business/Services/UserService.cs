@@ -27,7 +27,7 @@ namespace WeightTrackerApi.Business.Services
             _userRepository.AddUser(user);
         }
 
-        public void AddUserWeighIn(string username, WeighIn weighIn)
+        public void AddUserWeighIn(string username, WeighIn weighIn) // TODO: Associate userid to weighIn?
         {
             if (string.IsNullOrWhiteSpace(username))
                 throw new ArgumentException("No user was provided to AddUserWeighIn.");

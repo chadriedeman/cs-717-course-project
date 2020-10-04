@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using WeightTrackerApi.Business.Services;
 using WeightTrackerApi.DataAccess.Repositories;
+using WeightTrackerApi.Domain.Enumerations;
 using WeightTrackerApi.Domain.Models;
 
 namespace WeightTrackerApi.Tests.BusinessTests.ServiceTests
@@ -21,6 +22,30 @@ namespace WeightTrackerApi.Tests.BusinessTests.ServiceTests
             _chance = new Chance();
             _userRepository = Substitute.For<IUserRepository>();
             _subjectUnderTest = new UserService(_userRepository);
+        }
+
+        protected User GetValidUser()
+        {
+            return new User
+            {
+                Id = _chance.Natural(),
+                Username = _chance.Sentence(),
+                FirstName = _chance.Sentence(),
+                LastName = _chance.Sentence(),
+                WeighIns = new List<WeighIn>()
+            };
+        }
+
+        protected WeighIn GetValidWeighIn()
+        {
+            return new WeighIn
+            {
+                Id = _chance.Natural(),
+                UserId = _chance.Natural(),
+                Weight = _chance.Double(),
+                Date = _chance.Date(),
+                UnitOfMeasurement = UnitOfMeasurement.Pounds
+            };
         }
 
         public class AddUser : UserServiceTests
@@ -72,23 +97,52 @@ namespace WeightTrackerApi.Tests.BusinessTests.ServiceTests
 
                 _userRepository.Received(1).AddUser(Arg.Any<User>());
             }
-
-            private User GetValidUser()
-            {
-                return new User
-                {
-                    Id = _chance.Natural(),
-                    Username = _chance.Sentence(),
-                    FirstName = _chance.Sentence(),
-                    LastName = _chance.Sentence(),
-                    WeighIns = new List<WeighIn>()
-                };
-            }
         }
 
         public class AddUserWeighIn : UserServiceTests
         {
-            // TODO
+            [Test]
+            public void ShouldThrowArgumentExceptionWhenUsernameIsEmpty()
+            {
+                var emptyUserName = string.Empty;
+
+                var weighIn = GetValidWeighIn();
+
+                Action addUserCall = () => _subjectUnderTest.AddUserWeighIn(emptyUserName, weighIn);
+
+                addUserCall.Should().Throw<ArgumentException>()
+                    .WithMessage("No user was provided to AddUserWeighIn.");
+            }
+
+            [Test]
+            public void ShouldThrowArgumentExceptionWhenWeighInIsNull()
+            {
+                var username = _chance.Sentence();
+
+                WeighIn nullWeighIn = null;
+
+                Action addUserCall = () => _subjectUnderTest.AddUserWeighIn(username, nullWeighIn);
+
+                addUserCall.Should().Throw<ArgumentException>()
+                    .WithMessage("No weigh-in was provided to AddUserWeighIn.");
+            }
+
+            [Test]
+            public void ShouldThrowArgumentExceptionWhenUserDoesNotExistInDatabase()
+            {
+                var username = _chance.Sentence();
+
+                var weighIn = GetValidWeighIn();
+
+                User userInDatabase = null;
+
+                _userRepository.GetUser(Arg.Any<string>()).Returns(userInDatabase);
+
+                Action addUserCall = () => _subjectUnderTest.AddUserWeighIn(username, weighIn);
+
+                addUserCall.Should().Throw<ArgumentException>()
+                    .WithMessage($"{username} does not exist.");
+            }
         }
     }
 }
