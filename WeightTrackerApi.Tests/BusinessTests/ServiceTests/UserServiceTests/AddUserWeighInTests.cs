@@ -15,9 +15,9 @@ namespace WeightTrackerApi.Tests.BusinessTests.ServiceTests.UserServiceTests
 
             var weighIn = GetValidWeighIn();
 
-            Action addUserCall = () => _subjectUnderTest.AddUserWeighIn(emptyUserName, weighIn);
+            Action addUserWeighInCall = () => _subjectUnderTest.AddUserWeighIn(emptyUserName, weighIn);
 
-            addUserCall.Should().Throw<ArgumentException>()
+            addUserWeighInCall.Should().Throw<ArgumentException>()
                 .WithMessage("No user was provided to AddUserWeighIn.");
         }
 
@@ -28,9 +28,9 @@ namespace WeightTrackerApi.Tests.BusinessTests.ServiceTests.UserServiceTests
 
             WeighIn nullWeighIn = null;
 
-            Action addUserCall = () => _subjectUnderTest.AddUserWeighIn(username, nullWeighIn);
+            Action addUserWeighInCall = () => _subjectUnderTest.AddUserWeighIn(username, nullWeighIn);
 
-            addUserCall.Should().Throw<ArgumentException>()
+            addUserWeighInCall.Should().Throw<ArgumentException>()
                 .WithMessage("No weigh-in was provided to AddUserWeighIn.");
         }
 
@@ -45,9 +45,9 @@ namespace WeightTrackerApi.Tests.BusinessTests.ServiceTests.UserServiceTests
 
             _userRepository.GetUser(Arg.Any<string>()).Returns(userInDatabase);
 
-            Action addUserCall = () => _subjectUnderTest.AddUserWeighIn(username, weighIn);
+            Action addUserWeighInCall = () => _subjectUnderTest.AddUserWeighIn(username, weighIn);
 
-            addUserCall.Should().Throw<ArgumentException>()
+            addUserWeighInCall.Should().Throw<ArgumentException>()
                 .WithMessage($"{username} does not exist.");
         }
 
@@ -66,9 +66,9 @@ namespace WeightTrackerApi.Tests.BusinessTests.ServiceTests.UserServiceTests
 
             _userRepository.GetUserWeighIn(Arg.Any<string>(), Arg.Any<DateTime>()).Returns(existingWeighIn);
 
-            Action addUserCall = () => _subjectUnderTest.AddUserWeighIn(username, weighIn);
+            Action addUserWeighInCall = () => _subjectUnderTest.AddUserWeighIn(username, weighIn);
 
-            addUserCall.Should().Throw<ArgumentException>()
+            addUserWeighInCall.Should().Throw<ArgumentException>()
                 .WithMessage($"A weigh-in already exists for ${username} on ${weighIn.Date.ToShortDateString()}.");
         }
 

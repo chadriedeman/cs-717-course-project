@@ -8,7 +8,7 @@ using WeightTrackerApi.Domain.Models;
 
 namespace WeightTrackerApi.Tests.BusinessTests.ServiceTests.UserServiceTests
 {
-    public class UserServiceTestsBase
+    public abstract class UserServiceTestsBase
     {
         protected readonly Chance _chance;
         protected readonly IUserRepository _userRepository;

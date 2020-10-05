@@ -73,6 +73,11 @@ namespace WeightTrackerApi.Business.Services
             if (!userExistsInDatabase)
                 throw new ArgumentException($"{username} does not exist in the database.");
 
+            var weighInToBeDeleted = GetUserWeighIn(username, date);
+
+            if (weighInToBeDeleted == null)
+                throw new ArgumentException($"No weigh-in exists for {username} on {date.ToShortDateString()}.");
+
             _userRepository.DeleteUserWeighIn(username, date);
         }
 
