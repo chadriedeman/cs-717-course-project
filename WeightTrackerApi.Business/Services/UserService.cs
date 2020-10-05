@@ -138,6 +138,9 @@ namespace WeightTrackerApi.Business.Services
             if (string.IsNullOrWhiteSpace(username))
                 throw new ArgumentException("No username was provided to UpdateUserWeighIn.");
 
+            if (weighIn == null)
+                throw new ArgumentException("No weigh-in was provided to UpdateUserWeighIn.");
+
             var userExistsInDatabase = UserExistsInDatabase(username);
 
             if (!userExistsInDatabase)
@@ -146,9 +149,7 @@ namespace WeightTrackerApi.Business.Services
             var weighInAlreadyExists = WeighInAlreadyExists(username, weighIn.Date);
 
             if (!weighInAlreadyExists)
-            {
                 throw new ArgumentException($"No weigh-in exists for ${username} on ${weighIn.Date.ToShortDateString()}.");
-            }
 
             _userRepository.UpdateUserWeighIn(username, weighIn);
         }
