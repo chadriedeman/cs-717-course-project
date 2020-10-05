@@ -13,7 +13,7 @@ namespace WeightTrackerApi.Mappers
                 FirstName = userDto.FirstName,
                 LastName = userDto.LastName,
                 Username = userDto.Username,
-                // TODO: WeighIns
+                WeighIns = WeighInMapper.MapWeighInDtosToWeighIns(userDto.WeighIns)
             };
         }
 
@@ -25,7 +25,7 @@ namespace WeightTrackerApi.Mappers
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Username = user.Username,
-                // TODO: WeighIns
+                WeighIns = WeighInMapper.MapWeighInsToWeighInDtos(user.WeighIns)
             };
         }
     }

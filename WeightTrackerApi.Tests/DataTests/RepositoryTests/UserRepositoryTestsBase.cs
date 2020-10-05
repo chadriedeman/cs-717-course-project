@@ -1,6 +1,6 @@
 ﻿namespace WeightTrackerApi.Tests.DataTests.RepositoryTests
 {
-    public class UserRepositoryTests
+    public class UserRepositoryTestsBase
     {
     }
 }

@@ -2,8 +2,6 @@
 using NSubstitute;
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using WeightTrackerApi.Domain.Models;
 
 namespace WeightTrackerApi.Tests.BusinessTests.ServiceTests.UserServiceTests

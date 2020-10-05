@@ -1,8 +1,4 @@
 ﻿using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using WeightTrackerApi.DTOs;
 
 namespace WeightTrackerApi.Validators
@@ -11,7 +7,7 @@ namespace WeightTrackerApi.Validators
     {
         public WeighInDtoValidator()
         {
-            // TODO
+            RuleFor(weighInDto => weighInDto.UserId).GreaterThan(0);
         }
     }
 }
