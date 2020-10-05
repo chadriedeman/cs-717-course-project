@@ -1,10 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using NSubstitute;
+using NUnit.Framework;
 
 namespace WeightTrackerApi.Tests.BusinessTests.ServiceTests.UserServiceTests
 {
-    class GetUserTests
+    public class GetUserTests : UserServiceTestsBase
     {
+        [Test]
+        public void ShouldGetUsers()
+        {
+            _subjectUnderTest.GetUsers();
+
+            _userRepository.Received(1).GetUsers();
+        }
     }
 }
