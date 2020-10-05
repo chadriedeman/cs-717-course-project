@@ -1,14 +1,27 @@
-﻿using System;
+﻿using Dapper;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using WeightTrackerApi.Domain.Models;
 
 namespace WeightTrackerApi.DataAccess.Repositories
 {
     public class UserRepository : IUserRepository
     {
+        private readonly IDbConnection _databaseConnection;
+
+        public UserRepository(IDbConnection databaseConnection)
+        {
+            _databaseConnection = databaseConnection;
+        }
+
         public void AddUser(User user)
         {
-            throw new NotImplementedException();
+            var query = $@""; // TODO
+
+            var queryParameters = new DynamicParameters();
+
+            _databaseConnection.ExecuteScalar(query, queryParameters);
         }
 
         public void AddUserWeighIn(string username, WeighIn weighIn)
