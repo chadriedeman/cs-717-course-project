@@ -27,7 +27,7 @@ namespace WeightTrackerApi.Business.Services
             _userRepository.AddUser(user);
         }
 
-        public void AddUserWeighIn(string username, WeighIn weighIn) // TODO: Associate userid to weighIn?
+        public void AddUserWeighIn(string username, WeighIn weighIn) 
         {
             if (string.IsNullOrWhiteSpace(username))
                 throw new ArgumentException("No user was provided to AddUserWeighIn.");
@@ -43,9 +43,11 @@ namespace WeightTrackerApi.Business.Services
             var weighInAlreadyExists = WeighInAlreadyExists(username, weighIn.Date);
 
             if (weighInAlreadyExists)
-            {
                 throw new ArgumentException($"A weigh-in already exists for ${username} on ${weighIn.Date.ToShortDateString()}.");
-            }
+
+            var user = GetUser(username);
+
+            weighIn.UserId = user.Id;
 
             _userRepository.AddUserWeighIn(username, weighIn);
         }
