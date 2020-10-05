@@ -17,7 +17,10 @@ namespace WeightTrackerApi.DataAccess.Repositories
 
         public void AddUser(User user)
         {
-            var query = $@""; // TODO
+            var query = $@"INSERT INTO User
+                           ()
+                           VALUES
+                           ();"; // TODO
 
             var queryParameters = new DynamicParameters();
 
@@ -26,7 +29,15 @@ namespace WeightTrackerApi.DataAccess.Repositories
 
         public void AddUserWeighIn(string username, WeighIn weighIn)
         {
-            throw new NotImplementedException();
+
+            var query = $@"INSERT INTO WeighIn
+                           ()
+                           VALUES
+                           ();"; // TODO
+
+            var queryParameters = new DynamicParameters();
+
+            _databaseConnection.ExecuteScalar(query, queryParameters);
         }
 
         public void DeleteUser(string username)
@@ -41,7 +52,18 @@ namespace WeightTrackerApi.DataAccess.Repositories
 
         public User GetUser(string username)
         {
-            throw new NotImplementedException();
+            var query = $@"SELECT U.ID,
+                                  U.USERNAME,
+                                  U.FIRST_NAME,
+                                  U.LAST_NAME
+                           FROM User U
+                           JOIN WeighIn W 
+                                ON U.ID = W.USER_ID
+                           WHERE U.USERNAME = @username;"; 
+
+            var queryParameters = new DynamicParameters(); // TODO
+
+            return _databaseConnection.QuerySingle<User>(query, queryParameters);
         }
 
         public IEnumerable<User> GetUsers()
