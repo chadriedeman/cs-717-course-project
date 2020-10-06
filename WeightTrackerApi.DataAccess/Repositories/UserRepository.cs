@@ -29,11 +29,16 @@ namespace WeightTrackerApi.DataAccess.Repositories
 
         public void AddUserWeighIn(string username, WeighIn weighIn)
         {
-
             var query = $@"INSERT INTO WeighIn
-                           ()
+                                (USER_ID,
+                                 DATE,
+                                 WEIGHT,
+                                 UNIT_OF_MEASUREMENT)
                            VALUES
-                           ();"; // TODO
+                                (@{nameof(weighIn.UserId)},
+                                 @{nameof(weighIn.Date)},
+                                 @{nameof(weighIn.Weight)},
+                                 @{nameof(weighIn.UnitOfMeasurement)});";
 
             var queryParameters = new DynamicParameters();
 
@@ -52,23 +57,42 @@ namespace WeightTrackerApi.DataAccess.Repositories
 
         public User GetUser(string username)
         {
-            var query = $@"SELECT U.ID,
-                                  U.USERNAME,
-                                  U.FIRST_NAME,
-                                  U.LAST_NAME
+            var query = $@"SELECT U.ID {nameof(User.Id)},
+                                  U.USERNAME {nameof(User.Username)},
+                                  U.FIRST_NAME {nameof(User.FirstName)},
+                                  U.LAST_NAME {nameof(User.LastName)},
+                                  W.ID {nameof(WeighIn.Id)},
+                                  W.USER_ID {nameof(WeighIn.UserId)},
+                                  W.DATE {nameof(WeighIn.Date)},
+                                  W.WEIGHT {nameof(WeighIn.Weight)},
+                                  W.UNIT_OF_MEASUREMENT {nameof(WeighIn.UnitOfMeasurement)}
                            FROM User U
                            JOIN WeighIn W 
                                 ON U.ID = W.USER_ID
-                           WHERE U.USERNAME = @username;"; 
+                           WHERE U.USERNAME = @{nameof(username)};";
 
-            var queryParameters = new DynamicParameters(); // TODO
+            var queryParameters = new DynamicParameters();
+
+            queryParameters.Add($"@{nameof(username)}", username);
 
             return _databaseConnection.QuerySingle<User>(query, queryParameters);
         }
 
         public IEnumerable<User> GetUsers()
         {
-            throw new NotImplementedException();
+            var query = $@"SELECT U.ID,
+                                  U.USERNAME,
+                                  U.FIRST_NAME,
+                                  U.LAST_NAME,
+                                  W.ID,
+                                  W.DATE,
+                                  W.WEIGHT,
+                                  W.UNIT_OF_MEASUREMENT
+                           FROM User U
+                           JOIN WeighIn W 
+                                ON U.ID = W.USER_ID;";
+
+            return _databaseConnection.Query<User>(query);
         }
 
         public WeighIn GetUserWeighIn(string username, DateTime date)
