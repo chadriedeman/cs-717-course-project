@@ -148,7 +148,23 @@ namespace WeightTrackerApi.DataAccess.Repositories
 
         public IEnumerable<WeighIn> GetUserWeighIns(string username, DateTime beginDate, DateTime endDate)
         {
-            throw new NotImplementedException(); // TODO
+            var query = $@"SELECT W.USER_ID {nameof(WeighIn.UserId)},
+                                  W.DATE {nameof(WeighIn.Date)},
+                                  W.WEIGHT {nameof(WeighIn.Weight)},
+                                  W.UNIT_OF_MEASUREMENT {nameof(WeighIn.UnitOfMeasurement)}
+                           FROM WeighIn W
+                           JOIN User U 
+                                ON W.USER_ID = U.ID
+                           WHERE U.USERNAME = @{nameof(username)}
+                                 AND W.DATE BETWEEN @{nameof(beginDate)} AND @{nameof(endDate)};";
+
+            var queryParameters = new DynamicParameters();
+
+            queryParameters.Add($"@{nameof(username)}", username);
+            queryParameters.Add($"@{nameof(beginDate)}", beginDate);
+            queryParameters.Add($"@{nameof(endDate)}", endDate);
+
+            return _databaseConnectionProvider.Connection.Query<WeighIn>(query, queryParameters);
         }
 
         public void UpdateUser(User user)
