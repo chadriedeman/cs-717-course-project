@@ -1,5 +1,4 @@
-﻿using System;
-using System.Data;
+﻿using System.Data;
 using System.Data.SqlClient;
 
 namespace WeightTrackerApi.DataAccess
@@ -12,7 +11,7 @@ namespace WeightTrackerApi.DataAccess
             get
             {
                 if (_connection == null)
-                    _connection = FetchConnection();
+                    _connection = FetchNewConnection();
 
                 return _connection;
             } 
@@ -20,14 +19,14 @@ namespace WeightTrackerApi.DataAccess
 
         public DatabaseConnectionProvider()
         {
-            _connection = FetchConnection();
+            _connection = FetchNewConnection();
         }
 
-        private IDbConnection FetchConnection()
+        private IDbConnection FetchNewConnection()
         {
             var databaseConnectionString = new SqlConnectionStringBuilder
             {
-                // TODO
+                DataSource = "" // TODO: Setup connection string in config
             }
             .ConnectionString;
 

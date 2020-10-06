@@ -72,7 +72,18 @@ namespace WeightTrackerApi.DataAccess.Repositories
 
         public void DeleteUserWeighIn(string username, DateTime date)
         {
-            throw new NotImplementedException();
+            var query = $@"DELETE
+                           FROM WeighIn W
+                           JOIN User U
+                           WHERE U.USERNAME = @{nameof(username)}
+                                 AND W.DATE = @{nameof(date)};";
+
+            var queryParameters = new DynamicParameters();
+
+            queryParameters.Add($"@{nameof(username)}", username);
+            queryParameters.Add($"@{nameof(date)}", date);
+
+            _databaseConnectionProvider.Connection.ExecuteScalar(query, queryParameters);
         }
 
         public User GetUser(string username)
@@ -142,7 +153,17 @@ namespace WeightTrackerApi.DataAccess.Repositories
 
         public void UpdateUser(User user)
         {
-            throw new NotImplementedException();
+            var query = $@"UPDATE User
+                           SET USERNAME = {nameof(user.Username)},
+                               FIRST_NAME = {nameof(user.FirstName)},
+                               LAST_NAME = {nameof(user.LastName)}
+                           WHERE ID = @{nameof(user.Id)}";
+
+            var queryParameters = new DynamicParameters();
+
+            queryParameters.Add($"@{nameof(user.Id)}", user.Id);
+
+            _databaseConnectionProvider.Connection.ExecuteScalar(query, queryParameters);
         }
 
         public void UpdateUserWeighIn(string username, WeighIn weighIn)
