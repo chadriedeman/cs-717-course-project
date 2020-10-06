@@ -168,7 +168,22 @@ namespace WeightTrackerApi.DataAccess.Repositories
 
         public void UpdateUserWeighIn(string username, WeighIn weighIn)
         {
-            throw new NotImplementedException(); // TODO
+            var query = $@"UPDATE W
+                           SET W.DATE = {nameof(weighIn.Date)},
+                               W.WEIGHT = {nameof(weighIn.Weight)},
+                               W.UNIT_OF_MEASUREMENT = {nameof(weighIn.UnitOfMeasurement)}
+                           FROM WeighIn W
+                           JOIN User U
+                                ON W.USER_ID = U.ID
+                           WHERE U.USERNAME = @{nameof(username)}
+                                 AND W.DATE = @{nameof(weighIn.Date)};";
+
+            var queryParameters = new DynamicParameters();
+
+            queryParameters.Add($"@{nameof(username)}", username);
+            queryParameters.Add($"@{nameof(weighIn.Date)}", weighIn.Date);
+
+            _databaseConnectionProvider.Connection.ExecuteScalar(query, queryParameters);
         }
     }
 }
