@@ -148,7 +148,7 @@ namespace WeightTrackerApi.DataAccess.Repositories
 
         public IEnumerable<WeighIn> GetUserWeighIns(string username, DateTime beginDate, DateTime endDate)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException(); // TODO
         }
 
         public void UpdateUser(User user)
@@ -168,7 +168,7 @@ namespace WeightTrackerApi.DataAccess.Repositories
 
         public void UpdateUserWeighIn(string username, WeighIn weighIn)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException(); // TODO
         }
     }
 }
