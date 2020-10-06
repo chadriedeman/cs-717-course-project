@@ -60,7 +60,15 @@ namespace WeightTrackerApi.DataAccess.Repositories
 
         public void DeleteUser(string username)
         {
-            throw new NotImplementedException();
+            var query = $@"DELETE
+                           FROM User
+                           WHERE USERNAME = @{nameof(username)};";
+
+            var queryParameters = new DynamicParameters();
+
+            queryParameters.Add($"@{nameof(username)}", username);
+
+            _databaseConnection.ExecuteScalar(query, queryParameters);
         }
 
         public void DeleteUserWeighIn(string username, DateTime date)
