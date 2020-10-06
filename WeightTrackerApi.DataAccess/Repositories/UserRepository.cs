@@ -1,18 +1,17 @@
 ﻿using Dapper;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using WeightTrackerApi.Domain.Models;
 
 namespace WeightTrackerApi.DataAccess.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        private readonly IDbConnection _databaseConnection;
+        private readonly IDatabaseConnectionProvider _databaseConnectionProvider;
 
-        public UserRepository(IDbConnection databaseConnection)
+        public UserRepository(IDatabaseConnectionProvider databaseConnectionProvider)
         {
-            _databaseConnection = databaseConnection;
+            _databaseConnectionProvider = databaseConnectionProvider;
         }
 
         public void AddUser(User user)
@@ -32,7 +31,7 @@ namespace WeightTrackerApi.DataAccess.Repositories
             queryParameters.Add($"@{nameof(user.FirstName)}", user.FirstName);
             queryParameters.Add($"@{nameof(user.LastName)}", user.LastName);
 
-            _databaseConnection.ExecuteScalar(query, queryParameters);
+            _databaseConnectionProvider.Connection.ExecuteScalar(query, queryParameters);
         }
 
         public void AddUserWeighIn(string username, WeighIn weighIn)
@@ -55,7 +54,7 @@ namespace WeightTrackerApi.DataAccess.Repositories
             queryParameters.Add($"@{nameof(weighIn.Weight)}", weighIn.Weight);
             queryParameters.Add($"@{nameof(weighIn.UnitOfMeasurement)}", weighIn.UnitOfMeasurement);
 
-            _databaseConnection.ExecuteScalar(query, queryParameters);
+            _databaseConnectionProvider.Connection.ExecuteScalar(query, queryParameters);
         }
 
         public void DeleteUser(string username)
@@ -68,7 +67,7 @@ namespace WeightTrackerApi.DataAccess.Repositories
 
             queryParameters.Add($"@{nameof(username)}", username);
 
-            _databaseConnection.ExecuteScalar(query, queryParameters);
+            _databaseConnectionProvider.Connection.ExecuteScalar(query, queryParameters);
         }
 
         public void DeleteUserWeighIn(string username, DateTime date)
@@ -96,7 +95,7 @@ namespace WeightTrackerApi.DataAccess.Repositories
 
             queryParameters.Add($"@{nameof(username)}", username);
 
-            return _databaseConnection.QuerySingle<User>(query, queryParameters);
+            return _databaseConnectionProvider.Connection.QuerySingle<User>(query, queryParameters);
         }
 
         public IEnumerable<User> GetUsers()
@@ -113,7 +112,7 @@ namespace WeightTrackerApi.DataAccess.Repositories
                            JOIN WeighIn W 
                                 ON U.ID = W.USER_ID;";
 
-            return _databaseConnection.Query<User>(query);
+            return _databaseConnectionProvider.Connection.Query<User>(query);
         }
 
         public WeighIn GetUserWeighIn(string username, DateTime date)
@@ -133,7 +132,7 @@ namespace WeightTrackerApi.DataAccess.Repositories
             queryParameters.Add($"@{nameof(date)}", date);
             queryParameters.Add($"@{nameof(username)}", username);
 
-            return _databaseConnection.QuerySingle<WeighIn>(query, queryParameters);
+            return _databaseConnectionProvider.Connection.QuerySingle<WeighIn>(query, queryParameters);
         }
 
         public IEnumerable<WeighIn> GetUserWeighIns(string username, DateTime beginDate, DateTime endDate)
