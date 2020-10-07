@@ -1,6 +1,8 @@
 ﻿using ChanceNET;
 using NSubstitute;
 using NUnit.Framework;
+using System;
+using System.Linq;
 using WeightTrackerApi.DataAccess;
 using WeightTrackerApi.DataAccess.Repositories;
 using WeightTrackerApi.Domain.Models;
@@ -23,18 +25,55 @@ namespace WeightTrackerApi.Tests.DataTests.RepositoryTests
         [Test]
         public void AddUser_ShouldContainValidSqlSyntax()
         {
-            var user = new User
-            {
-                Username = _chance.Word(),
-                FirstName = _chance.Word(),
-                LastName = _chance.Word()
-            };
+            throw new NotImplementedException();
+        }
 
-            _subjectUnderTest.AddUser(user);
+        [Test]
+        public void AddUserWeighIn_ShouldContainValidSqlSyntax()
+        {
+            throw new NotImplementedException();
+        }
 
-            var query = ""; // TODO
+        [Test]
+        public void GetUser_ShouldContainValidSqlSyntax()
+        {
+            throw new NotImplementedException();
+        }
 
-            DatabaseTestsHelper.ValidateSqlQuery(query);
+        [Test]
+        public void UpdateUser_ShouldContainValidSqlSyntax()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Test]
+        public void DeleteUser_ShouldContainValidSqlSyntax()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Test]
+        public void GetUserWeighIn_ShouldContainValidSqlSyntax()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Test]
+        public void DeleteUserWeighIn_ShouldContainValidSqlSyntax()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Test]
+        public void UpdateUserWeighIn_ShouldContainValidSqlSyntax()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Test]
+        public void GetUserWeighIns_ShouldContainValidSqlSyntax()
+        {
+            throw new NotImplementedException();
         }
     }
 }
