@@ -206,9 +206,20 @@ namespace WeightTrackerApi.Controllers
         }
 
         [HttpGet("{username}/weigh-in")]
-        public IActionResult GetUserWeighIns([FromRoute] DateTime beginDate, [FromBody] DateTime endDate)
+        public IActionResult GetUserWeighIns([FromRoute] string username, [FromBody] DateTime beginDate, [FromBody] DateTime endDate)
         {
-            throw new NotImplementedException(); // TODO
+            try
+            {
+                var weighIn = _userService.GetUserWeighIns(username, beginDate, endDate);
+
+                return Ok(weighIn);
+            }
+            catch (ArgumentException argumentException)
+            {
+                _logger.LogError(argumentException.Message, argumentException);
+
+                return BadRequest(argumentException);
+            }
         }
     }
 }
