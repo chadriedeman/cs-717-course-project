@@ -10,7 +10,7 @@ namespace WeightTrackerApi.Controllers
         {
             if (httpRequest == null)
                 return string.Empty;
-
+            
             var isLocalhost = Regex.Match(httpRequest.Host.ToString(), "localhost")
                 .Success;
 
