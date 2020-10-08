@@ -117,7 +117,40 @@ namespace WeightTrackerApi.Controllers
         [HttpPost("{username}/weigh-in")]
         public IActionResult AddUserWeighIn([FromRoute] string username, [FromBody] WeighInDto weighInDto)
         {
-            throw new NotImplementedException(); // TODO
+
+            if (string.IsNullOrWhiteSpace(username))
+                return BadRequest("Username cannot be null");
+
+            if (weighInDto == null)
+                return BadRequest("Weigh-in cannot be null");
+
+            var weighInDtoValidator = new WeighInDtoValidator();
+
+            var validationResult = weighInDtoValidator.Validate(weighInDto);
+
+            if (!validationResult.IsValid)
+            {
+                var errorMessages = validationResult.Errors.Select(error => error.ErrorMessage);
+
+                return BadRequest(JsonConvert.SerializeObject(errorMessages));
+            }
+
+            var weighIn = WeighInMapper.MapWeighInDtoToWeighIn(weighInDto);
+
+            try
+            {
+                _userService.AddUserWeighIn(username, weighIn);
+            }
+            catch (ArgumentException argumentException)
+            {
+                _logger.LogError(argumentException.Message, argumentException);
+
+                return Conflict($"A weigh-in already exists for {username} on {weighInDto.Date.ToShortDateString()}.");
+            }
+
+            var apiBasePath = GetBasePath(Request);
+
+            return Created(apiBasePath, string.Empty);
         }
 
         [HttpPut("{username}/weigh-in")]
