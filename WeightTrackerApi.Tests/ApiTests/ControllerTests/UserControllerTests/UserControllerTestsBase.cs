@@ -1,8 +1,10 @@
 ﻿using ChanceNET;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
+using System.Collections.Generic;
 using WeightTrackerApi.Business.Services;
 using WeightTrackerApi.Controllers;
+using WeightTrackerApi.DTOs;
 
 namespace WeightTrackerApi.Tests.ApiTests.ControllerTests.UserControllerTests
 {
@@ -19,6 +21,17 @@ namespace WeightTrackerApi.Tests.ApiTests.ControllerTests.UserControllerTests
             _userService = Substitute.For<IUserService>();
             _logger = Substitute.For<ILogger<UserController>>();
             _subjectUnderTest = new UserController(_userService, _logger);
+        }
+
+        protected UserDto GetValidUserDto()
+        {
+            return new UserDto
+            {
+                Username = _chance.Word(),
+                FirstName = _chance.Word(),
+                LastName = _chance.Word(),
+                WeighIns = new List<WeighInDto>()
+            };
         }
     }
 }
