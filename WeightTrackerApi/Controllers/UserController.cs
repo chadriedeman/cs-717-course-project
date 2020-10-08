@@ -156,13 +156,45 @@ namespace WeightTrackerApi.Controllers
         [HttpPut("{username}/weigh-in")]
         public IActionResult UpdateUserWeighIn([FromRoute] string username, [FromBody] WeighInDto weighInDto)
         {
-            throw new NotImplementedException(); // TODO
+            if (string.IsNullOrWhiteSpace(username))
+                return BadRequest("Username cannot be null.");
+
+            if (weighInDto == null)
+                return BadRequest("Weigh-in cannot be null.");
+
+            var weighInDtoValidator = new WeighInDtoValidator();
+
+            var validationResult = weighInDtoValidator.Validate(weighInDto);
+
+            if (!validationResult.IsValid)
+            {
+                var errorMessages = validationResult.Errors.Select(error => error.ErrorMessage);
+
+                return BadRequest(JsonConvert.SerializeObject(errorMessages));
+            }
+
+            var weighIn = WeighInMapper.MapWeighInDtoToWeighIn(weighInDto);
+
+            _userService.UpdateUserWeighIn(username, weighIn);
+
+            return NoContent();
         }
 
         [HttpGet("{username}/weigh-in")]
         public IActionResult GetUserWeighIn([FromRoute] string username, [FromBody] DateTime date)
         {
-            throw new NotImplementedException(); // TODO
+            try
+            {
+                var weighIn = _userService.GetUserWeighIn(username, date);
+
+                return Ok(weighIn);
+            }
+            catch (ArgumentException argumentException)
+            {
+                _logger.LogError(argumentException.Message, argumentException);
+
+                return BadRequest(argumentException);
+            }
         }
 
         [HttpDelete("{username}/weigh-in")]
