@@ -200,7 +200,9 @@ namespace WeightTrackerApi.Controllers
         [HttpDelete("{username}/weigh-in")]
         public IActionResult DeleteUserWeighIn([FromRoute] string username, [FromBody] DateTime date)
         {
-            throw new NotImplementedException(); // TODO
+            _userService.DeleteUserWeighIn(username, date);
+
+            return NoContent();
         }
 
         [HttpGet("{username}/weigh-in")]
