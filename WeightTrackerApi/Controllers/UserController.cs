@@ -11,7 +11,7 @@ using WeightTrackerApi.Validators;
 namespace WeightTrackerApi.Controllers
 {
     [Route("api/users")]
-    public class UserController : Controller
+    public class UserController : BaseController
     {
         private readonly IUserService _userService;
         private readonly ILogger<UserController> _logger;
@@ -52,7 +52,9 @@ namespace WeightTrackerApi.Controllers
                 return Conflict($"The user {user.Username} already exists.");
             }
 
-            return Created("", ""); // TODO: Pass in appropriate params
+            var apiBasePath = GetBasePath(Request);
+
+            return Created(apiBasePath, string.Empty);
         }
 
         [HttpGet("{username}")]
