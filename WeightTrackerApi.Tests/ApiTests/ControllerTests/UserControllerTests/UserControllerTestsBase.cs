@@ -5,6 +5,7 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using WeightTrackerApi.Business.Services;
 using WeightTrackerApi.Controllers;
+using WeightTrackerApi.Domain.Enumerations;
 using WeightTrackerApi.DTOs;
 
 namespace WeightTrackerApi.Tests.ApiTests.ControllerTests.UserControllerTests
@@ -37,6 +38,18 @@ namespace WeightTrackerApi.Tests.ApiTests.ControllerTests.UserControllerTests
                 FirstName = _chance.Word(),
                 LastName = _chance.Word(),
                 WeighIns = new List<WeighInDto>()
+            };
+        }
+
+        protected WeighInDto GetValidWeighInDto()
+        {
+            return new WeighInDto
+            {
+                Id = _chance.Natural(),
+                UserId = _chance.Natural(),
+                Date = _chance.Date(),
+                Weight = _chance.Double(),
+                UnitOfMeasurement = UnitOfMeasurement.Pounds
             };
         }
     }
