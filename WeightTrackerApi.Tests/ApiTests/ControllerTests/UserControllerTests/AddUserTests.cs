@@ -1,7 +1,9 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
+using NSubstitute;
 using NUnit.Framework;
 using System;
+using WeightTrackerApi.Domain.Models;
 using WeightTrackerApi.DTOs;
 
 namespace WeightTrackerApi.Tests.ApiTests.ControllerTests.UserControllerTests
@@ -36,13 +38,25 @@ namespace WeightTrackerApi.Tests.ApiTests.ControllerTests.UserControllerTests
         [Test]
         public void ShouldReturnConflictWhenUserAlreadyExists()
         {
-            throw new NotImplementedException(); // TODO
+            _userService
+                .When(userService => userService.AddUser(Arg.Any<User>()))
+                .Throw(new ArgumentException());
+
+            var userDto = GetValidUserDto();
+
+            var response = _subjectUnderTest.AddUser(userDto);
+
+            response.Should().BeOfType<ConflictObjectResult>();
         }
 
         [Test]
         public void ShouldReturnCreatedWhenUserDtoIsValid()
         {
-            throw new NotImplementedException(); // TODO
+            var userDto = GetValidUserDto();
+
+            var response = _subjectUnderTest.AddUser(userDto);
+
+            response.Should().BeOfType<CreatedResult>();
         }
     }
 }
