@@ -47,6 +47,8 @@ namespace WeightTrackerApi.Tests.ApiTests.ControllerTests.UserControllerTests
             var response = _subjectUnderTest.AddUser(userDto);
 
             response.Should().BeOfType<ConflictObjectResult>();
+
+            _userService.Received(1).AddUser(Arg.Any<User>());
         }
 
         [Test]
@@ -57,6 +59,8 @@ namespace WeightTrackerApi.Tests.ApiTests.ControllerTests.UserControllerTests
             var response = _subjectUnderTest.AddUser(userDto);
 
             response.Should().BeOfType<CreatedResult>();
+
+            _userService.Received(1).AddUser(Arg.Any<User>());
         }
     }
 }

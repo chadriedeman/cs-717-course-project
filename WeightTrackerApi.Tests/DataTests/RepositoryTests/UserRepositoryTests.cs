@@ -2,10 +2,8 @@
 using NSubstitute;
 using NUnit.Framework;
 using System;
-using System.Linq;
 using WeightTrackerApi.DataAccess;
 using WeightTrackerApi.DataAccess.Repositories;
-using WeightTrackerApi.Domain.Models;
 
 namespace WeightTrackerApi.Tests.DataTests.RepositoryTests
 {

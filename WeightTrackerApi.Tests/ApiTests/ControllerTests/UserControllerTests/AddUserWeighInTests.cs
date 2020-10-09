@@ -3,8 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using WeightTrackerApi.Domain.Models;
 using WeightTrackerApi.DTOs;
 
@@ -76,6 +74,8 @@ namespace WeightTrackerApi.Tests.ApiTests.ControllerTests.UserControllerTests
             var response = _subjectUnderTest.AddUserWeighIn(username, weighInDto);
 
             response.Should().BeOfType<ConflictObjectResult>();
+
+            _userService.Received(1).AddUserWeighIn(Arg.Any<string>(), Arg.Any<WeighIn>());
         }
 
         [Test]
@@ -88,6 +88,8 @@ namespace WeightTrackerApi.Tests.ApiTests.ControllerTests.UserControllerTests
             var response = _subjectUnderTest.AddUserWeighIn(username, weighInDto);
 
             response.Should().BeOfType<CreatedResult>();
+
+            _userService.Received(1).AddUserWeighIn(Arg.Any<string>(), Arg.Any<WeighIn>());
         }
     }
 }
