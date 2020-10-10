@@ -38,6 +38,5 @@ namespace WeightTrackerApi.Tests.ApiTests.ControllerTests.UserControllerTests
 
             response.Should().BeOfType<OkObjectResult>();
         }
-
     }
 }
