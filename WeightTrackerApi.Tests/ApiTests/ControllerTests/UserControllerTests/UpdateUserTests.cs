@@ -1,5 +1,9 @@
-﻿using NUnit.Framework;
+﻿using FluentAssertions;
+using Microsoft.AspNetCore.Mvc;
+using NSubstitute;
+using NUnit.Framework;
 using System;
+using WeightTrackerApi.Domain.Models;
 
 namespace WeightTrackerApi.Tests.ApiTests.ControllerTests.UserControllerTests
 {
@@ -20,7 +24,13 @@ namespace WeightTrackerApi.Tests.ApiTests.ControllerTests.UserControllerTests
         [Test]
         public void ShouldUpdateUserAndRetunNoContentWhenInputsAreValid()
         {
-            throw new NotImplementedException(); // TODO
+            var user = GetValidUserDto();
+
+            var response = _subjectUnderTest.UpdateUser(user);
+
+            response.Should().BeOfType<NoContentResult>();
+
+            _userService.Received(1).UpdateUser(Arg.Any<User>());
         }
     }
 }
