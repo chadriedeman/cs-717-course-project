@@ -114,6 +114,9 @@ namespace WeightTrackerApi.Business.Services
             if (string.IsNullOrWhiteSpace(username))
                 throw new ArgumentException("No username was provided to GetUserWeighIns.");
 
+            if (beginDate.CompareTo(endDate) > 0)
+                throw new ArgumentException("Begin date cannot be greater than end date.");
+
             var userExistsInDatabase = UserExistsInDatabase(username);
 
             if (!userExistsInDatabase)

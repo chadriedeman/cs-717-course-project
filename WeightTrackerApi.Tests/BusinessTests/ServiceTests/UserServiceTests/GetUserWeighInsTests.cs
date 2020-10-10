@@ -24,13 +24,28 @@ namespace WeightTrackerApi.Tests.BusinessTests.ServiceTests.UserServiceTests
         }
 
         [Test]
+        public void ShouldThrowArgumentExceptionWhenBeginDateGreaterThanEndDate()
+        {
+            var username = _chance.Word();
+
+            var beginDate = DateTime.MaxValue;
+
+            var endDate = DateTime.MinValue;
+
+            Action getUserWeighInCall = () => _subjectUnderTest.GetUserWeighIns(username, beginDate, endDate);
+
+            getUserWeighInCall.Should().Throw<ArgumentException>()
+                .WithMessage("Begin date cannot be greater than end date.");
+        }
+
+        [Test]
         public void ShouldThrowArgumentExceptionWhenUserDoesNotExist()
         {
             var username = _chance.Sentence();
 
-            var beginDate = _chance.Date();
+            var beginDate = DateTime.MinValue;
 
-            var endDate = _chance.Date();
+            var endDate = DateTime.MaxValue;
 
             User userInDatabase = null;
 
@@ -47,9 +62,9 @@ namespace WeightTrackerApi.Tests.BusinessTests.ServiceTests.UserServiceTests
         {
             var username = _chance.Sentence();
 
-            var beginDate = _chance.Date();
+            var beginDate = DateTime.MinValue;
 
-            var endDate = _chance.Date();
+            var endDate = DateTime.MaxValue;
 
             var userInDatabase = GetValidUser();
 
