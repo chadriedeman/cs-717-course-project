@@ -72,15 +72,16 @@ namespace WeightTrackerApi.DataAccess.Repositories
 
         public void DeleteUserWeighIn(string username, DateTime date)
         {
+            var user = GetUser(username);
+
             var query = $@"DELETE
-                           FROM WeighIns W
-                           JOIN Users U
-                           WHERE U.USERNAME = @{nameof(username)}
-                                 AND W.DATE = @{nameof(date)};";
+                           FROM WeighIns
+                           WHERE USER_ID = @{nameof(user.Id)}
+                                 AND DATE = @{nameof(date)};";
 
             var queryParameters = new DynamicParameters();
 
-            queryParameters.Add($"@{nameof(username)}", username);
+            queryParameters.Add($"@{nameof(user.Id)}", user.Id);
             queryParameters.Add($"@{nameof(date)}", date);
 
             _databaseConnectionProvider.ExecuteScalar(query, queryParameters);

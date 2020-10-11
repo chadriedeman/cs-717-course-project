@@ -34,12 +34,7 @@ namespace WeightTrackerApi.Tests.DataTests.RepositoryTests
 
             _subjectUnderTest.AddUser(user);
 
-            var queryCall = _databaseConnectionProvider.ReceivedCalls()
-                .First();
-
-            var sqlQuery = queryCall.GetArguments()
-                .First()
-                .ToString();
+            var sqlQuery = GetSqlQuery();
 
             DatabaseTestsHelper.ValidateSqlQuery(sqlQuery);
 
@@ -55,12 +50,7 @@ namespace WeightTrackerApi.Tests.DataTests.RepositoryTests
 
             _subjectUnderTest.AddUserWeighIn(username, weighIn);
 
-            var queryCall = _databaseConnectionProvider.ReceivedCalls()
-                .First();
-
-            var sqlQuery = queryCall.GetArguments()
-                .First()
-                .ToString();
+            var sqlQuery = GetSqlQuery();
 
             DatabaseTestsHelper.ValidateSqlQuery(sqlQuery);
 
@@ -68,45 +58,105 @@ namespace WeightTrackerApi.Tests.DataTests.RepositoryTests
         }
 
         [Test]
-        public void GetUser_ShouldContainValidSqlSyntax()
+        public void GetUser_ShouldContainValidSqlSyntaxAndGetUser()
         {
-            throw new NotImplementedException();
+            var username = _chance.Word();
+
+            _subjectUnderTest.GetUser(username);
+
+            var sqlQuery = GetSqlQuery();
+
+            DatabaseTestsHelper.ValidateSqlQuery(sqlQuery);
+
+            _databaseConnectionProvider.Received(1).QuerySingle<User>(Arg.Any<string>(), Arg.Any<object>());
         }
 
         [Test]
-        public void UpdateUser_ShouldContainValidSqlSyntax()
+        public void UpdateUser_ShouldContainValidSqlSyntaxAndUpdateUser()
         {
-            throw new NotImplementedException();
+            var user = new User();
+
+            _subjectUnderTest.UpdateUser(user);
+
+            var sqlQuery = GetSqlQuery();
+
+            DatabaseTestsHelper.ValidateSqlQuery(sqlQuery);
+
+            _databaseConnectionProvider.Received(1).ExecuteScalar(Arg.Any<string>(), Arg.Any<object>());
         }
 
         [Test]
-        public void DeleteUser_ShouldContainValidSqlSyntax()
+        public void DeleteUser_ShouldContainValidSqlSyntaxAndDeleteUser()
         {
-            throw new NotImplementedException();
+            var username = _chance.Word();
+
+            _subjectUnderTest.DeleteUser(username);
+
+            var sqlQuery = GetSqlQuery();
+
+            DatabaseTestsHelper.ValidateSqlQuery(sqlQuery);
+
+            _databaseConnectionProvider.Received(1).ExecuteScalar(Arg.Any<string>(), Arg.Any<object>());
         }
 
         [Test]
-        public void GetUserWeighIn_ShouldContainValidSqlSyntax()
+        public void GetUserWeighIn_ShouldContainValidSqlSyntaxAndGetWeighIn()
         {
-            throw new NotImplementedException();
+            var username = _chance.Word();
+
+            var date = _chance.Date();
+
+            _subjectUnderTest.GetUserWeighIn(username, date);
+
+            var sqlQuery = GetSqlQuery();
+
+            DatabaseTestsHelper.ValidateSqlQuery(sqlQuery);
+
+            _databaseConnectionProvider.Received(1).QuerySingle<WeighIn>(Arg.Any<string>(), Arg.Any<object>());
         }
 
         [Test]
-        public void DeleteUserWeighIn_ShouldContainValidSqlSyntax()
+        public void UpdateUserWeighIn_ShouldContainValidSqlSyntaxAndUpdateWeighIn()
         {
-            throw new NotImplementedException();
+            var username = _chance.Word();
+
+            var weighIn = new WeighIn();
+
+            _subjectUnderTest.UpdateUserWeighIn(username, weighIn);
+
+            var sqlQuery = GetSqlQuery();
+
+            DatabaseTestsHelper.ValidateSqlQuery(sqlQuery);
+
+            _databaseConnectionProvider.Received(1).ExecuteScalar(Arg.Any<string>(), Arg.Any<object>());
         }
 
         [Test]
-        public void UpdateUserWeighIn_ShouldContainValidSqlSyntax()
+        public void GetUserWeighIns_ShouldContainValidSqlSyntaxAndGetWeighIns()
         {
-            throw new NotImplementedException();
+            var username = _chance.Word();
+
+            var date = _chance.Date();
+
+            _subjectUnderTest.GetUserWeighIn(username, date);
+
+            var sqlQuery = GetSqlQuery();
+
+            DatabaseTestsHelper.ValidateSqlQuery(sqlQuery);
+
+            _databaseConnectionProvider.Received(1).QuerySingle<WeighIn>(Arg.Any<string>(), Arg.Any<object>());
         }
 
-        [Test]
-        public void GetUserWeighIns_ShouldContainValidSqlSyntax()
+        private string GetSqlQuery()
         {
-            throw new NotImplementedException();
+            var queryCall = _databaseConnectionProvider.ReceivedCalls()
+                .First();
+
+            var sqlQuery = queryCall.GetArguments()
+                .First()
+                .ToString();
+
+            return sqlQuery;
         }
     }
 }
