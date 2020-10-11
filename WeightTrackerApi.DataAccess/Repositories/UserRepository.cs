@@ -31,7 +31,7 @@ namespace WeightTrackerApi.DataAccess.Repositories
             queryParameters.Add($"@{nameof(user.FirstName)}", user.FirstName);
             queryParameters.Add($"@{nameof(user.LastName)}", user.LastName);
 
-            _databaseConnectionProvider.Connection.ExecuteScalar(query, queryParameters);
+            _databaseConnectionProvider.ExecuteScalar(query, queryParameters);
         }
 
         public void AddUserWeighIn(string username, WeighIn weighIn)
@@ -54,7 +54,7 @@ namespace WeightTrackerApi.DataAccess.Repositories
             queryParameters.Add($"@{nameof(weighIn.Weight)}", weighIn.Weight);
             queryParameters.Add($"@{nameof(weighIn.UnitOfMeasurement)}", weighIn.UnitOfMeasurement);
 
-            _databaseConnectionProvider.Connection.ExecuteScalar(query, queryParameters);
+            _databaseConnectionProvider.ExecuteScalar(query, queryParameters);
         }
 
         public void DeleteUser(string username)
@@ -67,7 +67,7 @@ namespace WeightTrackerApi.DataAccess.Repositories
 
             queryParameters.Add($"@{nameof(username)}", username);
 
-            _databaseConnectionProvider.Connection.ExecuteScalar(query, queryParameters);
+            _databaseConnectionProvider.ExecuteScalar(query, queryParameters);
         }
 
         public void DeleteUserWeighIn(string username, DateTime date)
@@ -83,7 +83,7 @@ namespace WeightTrackerApi.DataAccess.Repositories
             queryParameters.Add($"@{nameof(username)}", username);
             queryParameters.Add($"@{nameof(date)}", date);
 
-            _databaseConnectionProvider.Connection.ExecuteScalar(query, queryParameters);
+            _databaseConnectionProvider.ExecuteScalar(query, queryParameters);
         }
 
         public User GetUser(string username)
@@ -106,7 +106,7 @@ namespace WeightTrackerApi.DataAccess.Repositories
 
             queryParameters.Add($"@{nameof(username)}", username);
 
-            return _databaseConnectionProvider.Connection.QuerySingle<User>(query, queryParameters);
+            return _databaseConnectionProvider.QuerySingle<User>(query, queryParameters);
         }
 
         public IEnumerable<User> GetUsers()
@@ -123,7 +123,7 @@ namespace WeightTrackerApi.DataAccess.Repositories
                            JOIN WeighIn W 
                                 ON U.ID = W.USER_ID;";
 
-            return _databaseConnectionProvider.Connection.Query<User>(query);
+            return _databaseConnectionProvider.Query<User>(query);
         }
 
         public WeighIn GetUserWeighIn(string username, DateTime date)
@@ -143,7 +143,7 @@ namespace WeightTrackerApi.DataAccess.Repositories
             queryParameters.Add($"@{nameof(date)}", date);
             queryParameters.Add($"@{nameof(username)}", username);
 
-            return _databaseConnectionProvider.Connection.QuerySingle<WeighIn>(query, queryParameters);
+            return _databaseConnectionProvider.QuerySingle<WeighIn>(query, queryParameters);
         }
 
         public IEnumerable<WeighIn> GetUserWeighIns(string username, DateTime beginDate, DateTime endDate)
@@ -164,7 +164,7 @@ namespace WeightTrackerApi.DataAccess.Repositories
             queryParameters.Add($"@{nameof(beginDate)}", beginDate);
             queryParameters.Add($"@{nameof(endDate)}", endDate);
 
-            return _databaseConnectionProvider.Connection.Query<WeighIn>(query, queryParameters);
+            return _databaseConnectionProvider.Query<WeighIn>(query, queryParameters);
         }
 
         public void UpdateUser(User user)
@@ -179,7 +179,7 @@ namespace WeightTrackerApi.DataAccess.Repositories
 
             queryParameters.Add($"@{nameof(user.Id)}", user.Id);
 
-            _databaseConnectionProvider.Connection.ExecuteScalar(query, queryParameters);
+            _databaseConnectionProvider.ExecuteScalar(query, queryParameters);
         }
 
         public void UpdateUserWeighIn(string username, WeighIn weighIn)
@@ -199,7 +199,7 @@ namespace WeightTrackerApi.DataAccess.Repositories
             queryParameters.Add($"@{nameof(username)}", username);
             queryParameters.Add($"@{nameof(weighIn.Date)}", weighIn.Date);
 
-            _databaseConnectionProvider.Connection.ExecuteScalar(query, queryParameters);
+            _databaseConnectionProvider.ExecuteScalar(query, queryParameters);
         }
     }
 }

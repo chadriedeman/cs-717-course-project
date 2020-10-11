@@ -1,42 +1,38 @@
-﻿using System.Data;
-using System.Data.SqlClient;
+﻿using System.Collections.Generic;
+using System.Data;
+using Dapper;
 
 namespace WeightTrackerApi.DataAccess
 {
     public class DatabaseConnectionProvider : IDatabaseConnectionProvider
     {
-        private readonly string _connectionString;
-        private IDbConnection _connection;
+        private readonly IDbConnection _connection;
 
-        public IDbConnection Connection {
-            get
-            {
-                if (_connection == null)
-                    _connection = FetchNewConnection(_connectionString);
+        public DatabaseConnectionProvider(IDbConnection databaseConnection)
+        {
+            _connection = databaseConnection;
 
-                return _connection;
-            } 
+            _connection.Open();
         }
 
-        public DatabaseConnectionProvider(string connectionString)
+        public IEnumerable<T> Query<T>(string sql, object queryParameters)
         {
-            _connectionString = connectionString;
-            _connection = FetchNewConnection(connectionString);
+            return _connection.Query<T>(sql, queryParameters);
         }
 
-        private IDbConnection FetchNewConnection(string connectionString)
+        public T QuerySingle<T>(string sql, object queryParameters)
         {
-            var databaseConnectionString = new SqlConnectionStringBuilder
-            {
-                DataSource = connectionString
-            }
-            .ConnectionString;
+            return _connection.QuerySingle<T>(sql, queryParameters);
+        }
 
-            var databaseConnection = new SqlConnection(databaseConnectionString);
+        public object ExecuteScalar(string sql, object queryParameters)
+        {
+            return _connection.ExecuteScalar(sql, queryParameters);
+        }
 
-            databaseConnection.Open();
-
-            return databaseConnection;
+        public IEnumerable<T> Query<T>(string sql)
+        {
+            return _connection.Query<T>(sql);
         }
     }
 }

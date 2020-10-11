@@ -23,19 +23,22 @@ namespace WeightTrackerApi.Tests.DataTests.RepositoryTests
         }
 
         [Test]
-        public void AddUser_ShouldContainValidSqlSyntax()
+        public void AddUser_ContainValidSqlSyntaxAndAddUser()
         {
             var user = new User();
 
             _subjectUnderTest.AddUser(user);
 
-            var query = _databaseConnectionProvider.ReceivedCalls()
-                .First()
-                .GetArguments()
+            var queryCall = _databaseConnectionProvider.ReceivedCalls()
+                .First();
+
+            var sqlQuery = queryCall.GetArguments()
                 .First()
                 .ToString();
 
-            DatabaseTestsHelper.ValidateSqlQuery(query);
+            //DatabaseTestsHelper.ValidateSqlQuery(sqlQuery);
+
+            _databaseConnectionProvider.Received(1).ExecuteScalar(Arg.Any<string>(), Arg.Any<object>());
         }
 
         [Test]
