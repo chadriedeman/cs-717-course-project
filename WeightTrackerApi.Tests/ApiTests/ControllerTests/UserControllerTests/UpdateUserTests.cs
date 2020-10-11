@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using NUnit.Framework;
-using System;
 using WeightTrackerApi.Domain.Models;
+using WeightTrackerApi.DTOs;
 
 namespace WeightTrackerApi.Tests.ApiTests.ControllerTests.UserControllerTests
 {
@@ -12,13 +12,30 @@ namespace WeightTrackerApi.Tests.ApiTests.ControllerTests.UserControllerTests
         [Test]
         public void ShouldReturnBadRequestWhenUserIsNull()
         {
-            throw new NotImplementedException(); // TODO
+            UserDto nullUser = null;
+
+            var response = _subjectUnderTest.UpdateUser(nullUser);
+
+            response.Should().BeOfType<BadRequestObjectResult>();
+
+            _userService.DidNotReceive().UpdateUser(Arg.Any<User>());
         }
 
         [Test]
         public void ShouldReturnBadRequestWhenUserIsInvalid()
         {
-            throw new NotImplementedException(); // TODO
+            var invalidUsername = string.Empty;
+
+            var invalidUser = new UserDto
+            {
+                Username = invalidUsername
+            };
+
+            var response = _subjectUnderTest.UpdateUser(invalidUser);
+
+            response.Should().BeOfType<BadRequestObjectResult>();
+
+            _userService.DidNotReceive().UpdateUser(Arg.Any<User>());
         }
 
         [Test]
