@@ -2,8 +2,10 @@
 using NSubstitute;
 using NUnit.Framework;
 using System;
+using System.Linq;
 using WeightTrackerApi.DataAccess;
 using WeightTrackerApi.DataAccess.Repositories;
+using WeightTrackerApi.Domain.Models;
 
 namespace WeightTrackerApi.Tests.DataTests.RepositoryTests
 {
@@ -23,7 +25,17 @@ namespace WeightTrackerApi.Tests.DataTests.RepositoryTests
         [Test]
         public void AddUser_ShouldContainValidSqlSyntax()
         {
-            throw new NotImplementedException();
+            var user = new User();
+
+            _subjectUnderTest.AddUser(user);
+
+            var query = _databaseConnectionProvider.ReceivedCalls()
+                .First()
+                .GetArguments()
+                .First()
+                .ToString();
+
+            DatabaseTestsHelper.ValidateSqlQuery(query);
         }
 
         [Test]

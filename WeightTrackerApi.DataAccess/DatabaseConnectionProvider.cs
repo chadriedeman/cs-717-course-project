@@ -5,28 +5,30 @@ namespace WeightTrackerApi.DataAccess
 {
     public class DatabaseConnectionProvider : IDatabaseConnectionProvider
     {
+        private readonly string _connectionString;
         private IDbConnection _connection;
 
         public IDbConnection Connection {
             get
             {
                 if (_connection == null)
-                    _connection = FetchNewConnection();
+                    _connection = FetchNewConnection(_connectionString);
 
                 return _connection;
             } 
         }
 
-        public DatabaseConnectionProvider()
+        public DatabaseConnectionProvider(string connectionString)
         {
-            _connection = FetchNewConnection();
+            _connectionString = connectionString;
+            _connection = FetchNewConnection(connectionString);
         }
 
-        private IDbConnection FetchNewConnection()
+        private IDbConnection FetchNewConnection(string connectionString)
         {
             var databaseConnectionString = new SqlConnectionStringBuilder
             {
-                DataSource = "" // TODO: Setup connection string in config
+                DataSource = connectionString
             }
             .ConnectionString;
 
