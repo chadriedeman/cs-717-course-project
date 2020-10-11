@@ -12,12 +12,17 @@ namespace WeightTrackerApi.Tests.DataTests.RepositoryTests
     public class UserRepositoryTests
     {
         private readonly Chance _chance;
-        private readonly IDatabaseConnectionProvider _databaseConnectionProvider;
-        private readonly UserRepository _subjectUnderTest;
+        private IDatabaseConnectionProvider _databaseConnectionProvider;
+        private UserRepository _subjectUnderTest;
 
         public UserRepositoryTests()
         {
             _chance = new Chance();
+        }
+
+        [SetUp]
+        public void SetUp()
+        {
             _databaseConnectionProvider = Substitute.For<IDatabaseConnectionProvider>();
             _subjectUnderTest = new UserRepository(_databaseConnectionProvider);
         }
@@ -36,15 +41,30 @@ namespace WeightTrackerApi.Tests.DataTests.RepositoryTests
                 .First()
                 .ToString();
 
-            //DatabaseTestsHelper.ValidateSqlQuery(sqlQuery);
+            DatabaseTestsHelper.ValidateSqlQuery(sqlQuery);
 
             _databaseConnectionProvider.Received(1).ExecuteScalar(Arg.Any<string>(), Arg.Any<object>());
         }
 
         [Test]
-        public void AddUserWeighIn_ShouldContainValidSqlSyntax()
+        public void AddUserWeighIn_ShouldContainValidSqlSyntaxAndAddWeighIn()
         {
-            throw new NotImplementedException();
+            var username = _chance.Word();
+
+            var weighIn = new WeighIn();
+
+            _subjectUnderTest.AddUserWeighIn(username, weighIn);
+
+            var queryCall = _databaseConnectionProvider.ReceivedCalls()
+                .First();
+
+            var sqlQuery = queryCall.GetArguments()
+                .First()
+                .ToString();
+
+            DatabaseTestsHelper.ValidateSqlQuery(sqlQuery);
+
+            _databaseConnectionProvider.Received(1).ExecuteScalar(Arg.Any<string>(), Arg.Any<object>());
         }
 
         [Test]

@@ -16,7 +16,7 @@ namespace WeightTrackerApi.DataAccess.Repositories
 
         public void AddUser(User user)
         {
-            var query = $@"INSERT INTO User
+            var query = $@"INSERT INTO Users
                                 (USERNAME,
                                 FIRST_NAME,
                                 LAST_NAME)
@@ -36,7 +36,7 @@ namespace WeightTrackerApi.DataAccess.Repositories
 
         public void AddUserWeighIn(string username, WeighIn weighIn)
         {
-            var query = $@"INSERT INTO WeighIn
+            var query = $@"INSERT INTO WeighIns
                                 (USER_ID,
                                  DATE,
                                  WEIGHT,
@@ -60,7 +60,7 @@ namespace WeightTrackerApi.DataAccess.Repositories
         public void DeleteUser(string username)
         {
             var query = $@"DELETE
-                           FROM User
+                           FROM Users
                            WHERE USERNAME = @{nameof(username)};";
 
             var queryParameters = new DynamicParameters();
@@ -73,8 +73,8 @@ namespace WeightTrackerApi.DataAccess.Repositories
         public void DeleteUserWeighIn(string username, DateTime date)
         {
             var query = $@"DELETE
-                           FROM WeighIn W
-                           JOIN User U
+                           FROM WeighIns W
+                           JOIN Users U
                            WHERE U.USERNAME = @{nameof(username)}
                                  AND W.DATE = @{nameof(date)};";
 
@@ -97,8 +97,8 @@ namespace WeightTrackerApi.DataAccess.Repositories
                                   W.DATE {nameof(WeighIn.Date)},
                                   W.WEIGHT {nameof(WeighIn.Weight)},
                                   W.UNIT_OF_MEASUREMENT {nameof(WeighIn.UnitOfMeasurement)}
-                           FROM User U
-                           JOIN WeighIn W 
+                           FROM Users U
+                           JOIN WeighIns W 
                                 ON U.ID = W.USER_ID
                            WHERE U.USERNAME = @{nameof(username)};";
 
@@ -119,8 +119,8 @@ namespace WeightTrackerApi.DataAccess.Repositories
                                   W.DATE,
                                   W.WEIGHT,
                                   W.UNIT_OF_MEASUREMENT
-                           FROM User U
-                           JOIN WeighIn W 
+                           FROM Users U
+                           JOIN WeighIns W 
                                 ON U.ID = W.USER_ID;";
 
             return _databaseConnectionProvider.Query<User>(query);
@@ -132,8 +132,8 @@ namespace WeightTrackerApi.DataAccess.Repositories
                                   W.DATE {nameof(WeighIn.Date)},
                                   W.WEIGHT {nameof(WeighIn.Weight)},
                                   W.UNIT_OF_MEASUREMENT {nameof(WeighIn.UnitOfMeasurement)}
-                           FROM WeighIn W
-                           JOIN User U 
+                           FROM WeighIns W
+                           JOIN Users U 
                                 ON W.USER_ID = U.ID
                            WHERE U.USERNAME = @{nameof(username)}
                                  AND W.DATE = @{nameof(date)};";
@@ -152,8 +152,8 @@ namespace WeightTrackerApi.DataAccess.Repositories
                                   W.DATE {nameof(WeighIn.Date)},
                                   W.WEIGHT {nameof(WeighIn.Weight)},
                                   W.UNIT_OF_MEASUREMENT {nameof(WeighIn.UnitOfMeasurement)}
-                           FROM WeighIn W
-                           JOIN User U 
+                           FROM WeighIns W
+                           JOIN Users U 
                                 ON W.USER_ID = U.ID
                            WHERE U.USERNAME = @{nameof(username)}
                                  AND W.DATE BETWEEN @{nameof(beginDate)} AND @{nameof(endDate)};";
@@ -169,7 +169,7 @@ namespace WeightTrackerApi.DataAccess.Repositories
 
         public void UpdateUser(User user)
         {
-            var query = $@"UPDATE User
+            var query = $@"UPDATE Users
                            SET USERNAME = {nameof(user.Username)},
                                FIRST_NAME = {nameof(user.FirstName)},
                                LAST_NAME = {nameof(user.LastName)}
@@ -188,8 +188,8 @@ namespace WeightTrackerApi.DataAccess.Repositories
                            SET W.DATE = {nameof(weighIn.Date)},
                                W.WEIGHT = {nameof(weighIn.Weight)},
                                W.UNIT_OF_MEASUREMENT = {nameof(weighIn.UnitOfMeasurement)}
-                           FROM WeighIn W
-                           JOIN User U
+                           FROM WeighIns W
+                           JOIN Users U
                                 ON W.USER_ID = U.ID
                            WHERE U.USERNAME = @{nameof(username)}
                                  AND W.DATE = @{nameof(weighIn.Date)};";
