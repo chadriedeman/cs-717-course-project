@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using WeightTrackerApi.Business.Services;
 using WeightTrackerApi.DTOs;
@@ -28,16 +29,10 @@ namespace WeightTrackerApi.Controllers
             if (userDto == null)
                 return BadRequest("User cannot be null");
 
-            var userDtoValidator = new UserDtoValidator();
+            var errorMessages = ValidateUserDto(userDto);
 
-            var validationResult = userDtoValidator.Validate(userDto);
-
-            if (!validationResult.IsValid)
-            {
-                var errorMessages = validationResult.Errors.Select(error => error.ErrorMessage);
-
+            if (errorMessages.Any())
                 return BadRequest(JsonConvert.SerializeObject(errorMessages));
-            }
 
             var user = UserMapper.MapUserDtoToUser(userDto);
 
@@ -88,16 +83,10 @@ namespace WeightTrackerApi.Controllers
             if (userDto == null)
                 return BadRequest("User cannot be null.");
 
-            var userDtoValidator = new UserDtoValidator();
+            var errorMessages = ValidateUserDto(userDto);
 
-            var validationResult = userDtoValidator.Validate(userDto);
-
-            if (!validationResult.IsValid)
-            {
-                var errorMessages = validationResult.Errors.Select(error => error.ErrorMessage);
-
+            if (errorMessages.Any())
                 return BadRequest(JsonConvert.SerializeObject(errorMessages));
-            }
 
             var user = UserMapper.MapUserDtoToUser(userDto);
 
@@ -124,16 +113,10 @@ namespace WeightTrackerApi.Controllers
             if (weighInDto == null)
                 return BadRequest("Weigh-in cannot be null");
 
-            var weighInDtoValidator = new WeighInDtoValidator();
+            var errorMessages = ValidateWeighInDto(weighInDto);
 
-            var validationResult = weighInDtoValidator.Validate(weighInDto);
-
-            if (!validationResult.IsValid)
-            {
-                var errorMessages = validationResult.Errors.Select(error => error.ErrorMessage);
-
+            if (errorMessages.Any())
                 return BadRequest(JsonConvert.SerializeObject(errorMessages));
-            }
 
             var weighIn = WeighInMapper.MapWeighInDtoToWeighIn(weighInDto);
 
@@ -162,16 +145,10 @@ namespace WeightTrackerApi.Controllers
             if (weighInDto == null)
                 return BadRequest("Weigh-in cannot be null.");
 
-            var weighInDtoValidator = new WeighInDtoValidator();
+            var errorMessages = ValidateWeighInDto(weighInDto);
 
-            var validationResult = weighInDtoValidator.Validate(weighInDto);
-
-            if (!validationResult.IsValid)
-            {
-                var errorMessages = validationResult.Errors.Select(error => error.ErrorMessage);
-
+            if (errorMessages.Any())
                 return BadRequest(JsonConvert.SerializeObject(errorMessages));
-            }
 
             var weighIn = WeighInMapper.MapWeighInDtoToWeighIn(weighInDto);
 
@@ -220,6 +197,24 @@ namespace WeightTrackerApi.Controllers
 
                 return BadRequest(argumentException);
             }
+        }
+
+        private IEnumerable<string> ValidateUserDto(UserDto userDto)
+        {
+            var userDtoValidator = new UserDtoValidator();
+
+            var validationResult = userDtoValidator.Validate(userDto);
+
+            return validationResult.IsValid ? new List<string>() : validationResult.Errors.Select(error => error.ErrorMessage);
+        }
+
+        private IEnumerable<string> ValidateWeighInDto(WeighInDto weighInDto)
+        {
+            var weighInDtoValidator = new WeighInDtoValidator();
+
+            var validationResult = weighInDtoValidator.Validate(weighInDto);
+
+            return validationResult.IsValid ? new List<string>() : validationResult.Errors.Select(error => error.ErrorMessage);
         }
     }
 }
