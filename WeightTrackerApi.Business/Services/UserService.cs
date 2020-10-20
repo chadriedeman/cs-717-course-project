@@ -14,6 +14,9 @@ namespace WeightTrackerApi.Business.Services
             _userRepository = userRepository;
         }
 
+        /// Pre-condition: None.
+        /// 
+        /// Post-condition: The user will be added to the database.
         public void AddUser(User user)
         {
             if (user == null || string.IsNullOrWhiteSpace(user.Username))
@@ -27,6 +30,9 @@ namespace WeightTrackerApi.Business.Services
             _userRepository.AddUser(user);
         }
 
+        /// Pre-condition: The user must exist in the database.
+        /// 
+        /// Post-condition: The weigh-in will be added to the database.
         public void AddUserWeighIn(string username, WeighIn weighIn) 
         {
             if (string.IsNullOrWhiteSpace(username))
@@ -52,6 +58,9 @@ namespace WeightTrackerApi.Business.Services
             _userRepository.AddUserWeighIn(username, weighIn);
         }
 
+        /// Pre-condition: The given user must exist in the database.
+        /// 
+        /// Post-condition: The user will be deleted from the database.
         public void DeleteUser(string username)
         {
             if (string.IsNullOrWhiteSpace(username))
@@ -65,6 +74,9 @@ namespace WeightTrackerApi.Business.Services
             _userRepository.DeleteUser(username);
         }
 
+        /// Pre-condition: The user and weigh-in must exist in the database.
+        /// 
+        /// Post-condition: The weigh-in will be deleted from the database.
         public void DeleteUserWeighIn(string username, DateTime date)
         {
             if (string.IsNullOrWhiteSpace(username))
@@ -83,6 +95,9 @@ namespace WeightTrackerApi.Business.Services
             _userRepository.DeleteUserWeighIn(username, date);
         }
 
+        /// Pre-condition: None.
+        /// 
+        /// Post-condition: The user will be returned from the database if the user exist, otherwise the function will return null.
         public User GetUser(string username)
         {
             if (string.IsNullOrWhiteSpace(username))
@@ -91,11 +106,17 @@ namespace WeightTrackerApi.Business.Services
             return _userRepository.GetUser(username);
         }
 
+        /// Pre-condition: None.
+        /// 
+        /// Post-condition: All users will be returned from the database.
         public IEnumerable<User> GetUsers()
         {
             return _userRepository.GetUsers();
         }
 
+        /// Pre-condition: The user and weigh-in must exist.
+        /// 
+        /// Post-condition: The weigh-in will be returned from the database.
         public WeighIn GetUserWeighIn(string username, DateTime date)
         {
             if (string.IsNullOrWhiteSpace(username))
@@ -109,6 +130,9 @@ namespace WeightTrackerApi.Business.Services
             return _userRepository.GetUserWeighIn(username, date);
         }
 
+        /// Pre-condition: The user must exist.
+        /// 
+        /// Post-condition: All weigh-ins between the given dates will be returned from the database.
         public IEnumerable<WeighIn> GetUserWeighIns(string username, DateTime beginDate, DateTime endDate)
         {
             if (string.IsNullOrWhiteSpace(username))
@@ -125,6 +149,9 @@ namespace WeightTrackerApi.Business.Services
             return _userRepository.GetUserWeighIns(username, beginDate, endDate);
         }
 
+        /// Pre-condition: The user must exist.
+        /// 
+        /// Post-condition: The user will be updated in the database.
         public void UpdateUser(User user)
         {
             if (user == null || string.IsNullOrWhiteSpace(user.Username))
@@ -138,6 +165,9 @@ namespace WeightTrackerApi.Business.Services
             _userRepository.UpdateUser(user);
         }
 
+        /// Pre-condition: The user and weigh-in must exist.
+        /// 
+        /// Post-condition: The weigh-in will be updated in the database.
         public void UpdateUserWeighIn(string username, WeighIn weighIn)
         {
             if (string.IsNullOrWhiteSpace(username))
