@@ -29,7 +29,7 @@ namespace WeightTrackerApi
             services.AddScoped<IDbConnection>(serviceProvider => new SqlConnection(GetDatabaseConnectionString()));
 
             services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IUserRepository, MockUserRepository>(); // TODO: Change back to UserRepository when DB is setup
+            services.AddSingleton<IUserRepository, MockUserRepository>(); // TODO: Change back to UserRepository when DB is setup
             services.AddScoped<IDatabaseConnectionProvider, DatabaseConnectionProvider>();
         }
 
